@@ -1,9 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1b3b0539-63a3-4e20-aa27-07229fe1b5a0" name="Default" comment="06-- 配置 MySQL 数据库&#10;     单独给数据库 配置了权限和用户">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utils/zdjango_redis_use.py" />
+    <list default="true" id="1b3b0539-63a3-4e20-aa27-07229fe1b5a0" name="Default" comment="05-- django_redis 的基本使用&#10;">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/favicon.ico" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/QQ-weixin.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/adv01.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/adv02.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/arrow.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/banner01.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/banner02.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/banner03.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/bar_code.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/cat.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/clock.jpeg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/clock.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/down.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/edit.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/find-password.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/goods/goods001.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/goods/goods002.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/goods/goods003.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/goods/goods004.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/goods/goods005.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/goods/goods006.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/goods/goods007.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/goods/goods008.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/goods/goods009.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/goods_450.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/icons.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/icons02.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/interval_line.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/left_bg.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/login_banner.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/logo.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/logo02.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/missing.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/pay_icons.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/pic_code.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/register_banner.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/selected.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/shine.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/shop_cart.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/slide01.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/slide02.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/slide03.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/slide04.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/stars.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/success.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/images/time_count_bg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/404.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/base.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/cart.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/jquery.pagination.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/main.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/reset.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/goods_judge.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/axios-0.18.0.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/base.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/cart.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/common.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/detail.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/goods_judge.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/host.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/index.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery-1.12.4.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery.pagination.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/list.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/login.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/oauth_callback.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/order_success.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/place_order.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/register.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/slide.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/user_center_info.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/user_center_order.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/user_center_pass.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/user_center_site.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/vue-2.5.16.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/list.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/login.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/oauth_callback.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/order_success.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/pay_success.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/place_order.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/register.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/register_vue.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/search.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/user_center_info.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/user_center_order.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/user_center_pass.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/user_center_site.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/meiduo_mall/settings/development.py" afterPath="$PROJECT_DIR$/meiduo_mall/settings/development.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -42,21 +132,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="development.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="development.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/meiduo_mall/settings/development.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="141" column="23" lean-forward="true" selection-start-line="141" selection-start-column="23" selection-end-line="141" selection-end-column="23" />
+            <state relative-caret-position="375">
+              <caret line="117" column="0" lean-forward="true" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="zdjango_redis_use.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="zdjango_redis_use.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/zdjango_redis_use.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state relative-caret-position="535">
+              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -92,9 +182,9 @@
         <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/meiduo_mall/settings/product.py" />
         <option value="$PROJECT_DIR$/meiduo_mall/__init__.py" />
-        <option value="$PROJECT_DIR$/meiduo_mall/settings/development.py" />
         <option value="$PROJECT_DIR$/utils/jinja2_env.py" />
         <option value="$PROJECT_DIR$/utils/zdjango_redis_use.py" />
+        <option value="$PROJECT_DIR$/meiduo_mall/settings/development.py" />
       </list>
     </option>
   </component>
@@ -150,39 +240,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meiduo_mall" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meiduo_mall" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meiduo_mall" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meiduo_mall" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meiduo_mall" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meiduo_mall" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="settings" />
+              <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -521,7 +579,14 @@
       <option name="project" value="LOCAL" />
       <updated>1565869591975</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="05-- django_redis 的基本使用&#10;">
+      <created>1565871302434</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1565871302434</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView">
@@ -535,9 +600,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="52" width="1021" height="1151" extended-state="4" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2553626" sideWeight="0.49253732" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2553626" sideWeight="0.49253732" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42424244" sideWeight="0.50766087" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299285" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -568,7 +633,8 @@
     <MESSAGE value="03--配置 jinja2 模板" />
     <MESSAGE value="04-- redis 的配置" />
     <MESSAGE value="06-- 配置 MySQL 数据库&#10;     单独给数据库 配置了权限和用户" />
-    <option name="LAST_COMMIT_MESSAGE" value="06-- 配置 MySQL 数据库&#10;     单独给数据库 配置了权限和用户" />
+    <MESSAGE value="05-- django_redis 的基本使用&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="05-- django_redis 的基本使用&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -625,14 +691,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/meiduo_mall/settings/development.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="141" column="23" lean-forward="true" selection-start-line="141" selection-start-column="23" selection-end-line="141" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/jinja2_env.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -645,8 +703,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utils/zdjango_redis_use.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state relative-caret-position="535">
+          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meiduo_mall/settings/development.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="117" column="0" lean-forward="true" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
           <folding />
         </state>
       </provider>
