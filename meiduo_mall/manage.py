@@ -3,7 +3,13 @@ import os
 import sys
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings")
+
+    # 测试环境的配置文件  os 系统库  environ   setdefault设置默认
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.development")
+
+    # 生产环境 配置文件
+    # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.product")
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError:
