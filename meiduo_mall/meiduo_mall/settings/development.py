@@ -55,8 +55,8 @@ ROOT_URLCONF = 'meiduo_mall.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',  # 1.jinja2模板引擎
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # 2.模本文件夹路径
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,6 +65,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            # 3.加载Jinja2模板引擎环境
+            'environment': 'utils.jinja2_env.jinja2_environment',
         },
     },
 ]
