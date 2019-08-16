@@ -213,3 +213,8 @@ logger = logging.getLogger('django')
 # >>> logger.info('123')
 # INFO <console> 1 123  ---> meiduo_mall.logs.meiduo.log(日志文件自动生成)
 
+
+# 注册 User模型类 替换 系统自带的User模型类
+# AUTH_USER_MODEL = 'auth.User'  --> 系统源代码
+# AUTH_USER_MODEL = '子应用名称.模型类的名字'
+AUTH_USER_MODEL = 'users.User'
