@@ -7,6 +7,7 @@ import re
 from django import http
 
 from apps.users.models import User
+from meiduo_mall.settings.development import logger
 
 
 class RegisterView(View):
@@ -50,8 +51,14 @@ class RegisterView(View):
             return http.HttpResponseForbidden('请求协议！')
 
         # <3> 注册用户
-        # from apps.users.models import User  --> 自定义用户类User
-        User.objects.create_user(username=username, password=password, mobile=mobile)
+        # Duplicate(重复) entry 'itcast1' for key 'username'
+        # 交互数据库的地方 最好预处理
+        try:
+            # from apps.users.models import User  --> 自定义用户类User
+            User.objects.create_user(username=username, password=password, mobile=mobile)
+        except Exception as e:
+            logger.error(e)
+            return render(request, 'register.html')
 
         # <4> 重定向到首页
         return http.HttpResponseForbidden('重定向到首页')
