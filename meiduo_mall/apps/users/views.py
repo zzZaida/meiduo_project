@@ -47,7 +47,7 @@ class RegisterView(View):
         # * 7.同意”美多商城用户使用协议“: 判断是否选中
         if allow != 'on':
             return http.HttpResponseForbidden('请求协议！')
-        print('后台请求')
+
         # 3 注册用户
 
         # 4 重定向到首页

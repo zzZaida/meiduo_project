@@ -3,13 +3,24 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>美多商城-注册</title>
-	<link rel="stylesheet" type="text/css" href="../static/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
+	<link rel="stylesheet" type="text/css" href="{{ static('css/reset.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ static('css/main.css') }}">
+
+{#    Uncaught ReferenceError: vue is not defined   #}
+    <script src="{{ static('js/vue-2.5.16.js') }}"></script>
+{#    Uncaught ReferenceError: host is not defined --> 导包host.js  #}
+    <script src="{{ static('js/host.js') }}"></script>
+{#    Uncaught ReferenceError: axios is not defined #}
+
+
 </head>
+{# <body>是一个特殊的标签 #}
 <body>
-	<div class="register_con">
+{#    [Vue warn]: Cannot find element: #app    #}
+    <div id="app">
+        <div class="register_con">
 		<div class="l_con fl">
-			<a href="../static/index.html" class="reg_logo"><img src="../static/images/logo.png"></a>
+			<a href="{{ static('index.html') }}" class="reg_logo"><img src="{{ static('images/logo.png') }}"></a>
 			<div class="reg_slogan">商品美 · 种类多 · 欢迎光临</div>
 			<div class="reg_banner"></div>
 		</div>
@@ -17,7 +28,7 @@
 		<div class="r_con fr">
 			<div class="reg_title clearfix">
 				<h1>用户注册</h1>
-				<a href="../static/login.html">登录</a>
+				<a href="{{ static('login.html') }}">登录</a>
 			</div>
 			<div class="reg_form clearfix">
 				<form method="post" class="register_form">
@@ -26,45 +37,47 @@
 				<ul>
 					<li>
 						<label>用户名:</label>
-						<input type="text" name="user_name" id="user_name">
-						<span class="error_tip">请输入5-20个字符的用户</span>
-					</li>					
+{#  user_name --> username --> 前端代码也有缓存 ---> 记得刷新  #}
+{#  blur(失去焦点)       v-model(双向绑定)     标签 --> JS 里面的变量传 #}
+						<input type="text" name="username" id="user_name" v-on:blur="check_username" v-model="username">
+						<span class="error_tip" v-show="error_name">请输入5-20个字符的用户</span>
+					</li>
 					<li>
 						<label>密码:</label>
-						<input type="password" name="pwd" id="pwd">
-						<span class="error_tip">请输入8-20位的密码</span>
+						<input type="password" name="password" id="pwd" v-on:blur="check_pwd" v-model="password">
+						<span class="error_tip" v-show="error_password">请输入8-20位的密码</span>
 					</li>
 					<li>
 						<label>确认密码:</label>
-						<input type="password" name="cpwd" id="cpwd">
-						<span class="error_tip">两次输入的密码不一致</span>
+						<input type="password" name="password2" id="cpwd" v-on:blur="check_cpwd" v-model="password2">
+						<span class="error_tip" v-show="error_check_password">两次输入的密码不一致</span>
 					</li>
 					<li>
 						<label>手机号:</label>
-						<input type="text" name="phone" id="phone">
-						<span class="error_tip">请输入正确的手机号码</span>
+						<input type="text" name="mobile" id="phone" v-on:blur="check_phone" v-model="mobile">
+						<span class="error_tip" v-show="error_phone">请输入正确的手机号码</span>
 					</li>
 					<li>
                         <label>图形验证码:</label>
-                        <input type="text" name="pic_code" id="pic_code" class="msg_input">
-                        <img src="../static/images/pic_code.jpg" alt="图形验证码" class="pic_code">
-                        <span class="error_tip">请填写图形验证码</span>
+                        <input type="text" name="pic_code" id="pic_code" class="msg_input" v-on:blur="check_image_code" v-model="image_code">
+                        <img src="{{ static('images/pic_code.jpg') }}" alt="图形验证码" class="pic_code">
+                        <span class="error_tip" v-show="error_image_code">请填写图形验证码</span>
                     </li>
 					<li>
 						<label>短信验证码:</label>
-						<input type="text" name="msg_code" id="msg_code" class="msg_input">
+						<input type="text" name="msg_code" id="msg_code" class="msg_input" v-on:blur="check_sms_code" v-model="sms_code">
 						<a href="javascript:;" class="get_msg_code">获取短信验证码</a>
-						<span class="error_tip">请填写短信验证码</span>
+						<span class="error_tip" v-show="error_sms_code">请填写短信验证码</span>
 					</li>
 					<li class="agreement">
-						<input type="checkbox" name="allow" id="allow" checked="checked">
+						<input type="checkbox" name="allow" id="allow" checked="checked" v-on:blur="check_allow" v-model="allow">
 						<label>同意”美多商城用户使用协议“</label>
-						<span class="error_tip">请勾选用户协议</span>
+						<span class="error_tip" v-show="error_allow">请勾选用户协议</span>
 					</li>
 					<li class="reg_sub">
 						<input type="submit" value="注 册">
 					</li>
-				</ul>				
+				</ul>
 				</form>
 			</div>
 
@@ -72,7 +85,7 @@
 
 	</div>
 
-	<div class="footer no-mp">
+	    <div class="footer no-mp">
 		<div class="foot_link">
 			<a href="#">关于我们</a>
 			<span>|</span>
@@ -80,11 +93,13 @@
 			<span>|</span>
 			<a href="#">招聘人才</a>
 			<span>|</span>
-			<a href="#">友情链接</a>		
+			<a href="#">友情链接</a>
 		</div>
 		<p>CopyRight © 2016 北京美多商业股份有限公司 All Rights Reserved</p>
 		<p>电话：010-****888    京ICP备*******8号</p>
 	</div>
-	<script type="text/javascript" src="../static/js/register.js"></script>
+    </div>
+
+	<script type="text/javascript" src="{{ static('js/register.js') }}"></script>
 </body>
 </html>
