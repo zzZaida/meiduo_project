@@ -6,6 +6,7 @@ import re
 # from django.http import HttpResponseForbidden
 from django import http
 
+from apps.users.models import User
 
 
 class RegisterView(View):
@@ -16,7 +17,7 @@ class RegisterView(View):
 
     # 2.注册功能
     def post(self,request):
-        # 1 接收解析参数
+        # <1> 接收解析参数
         username = request.POST.get('username')
         # username = request.POST('username')  ‘QueryDict’ object is not callable(调用)
         password = request.POST.get('password')
@@ -24,7 +25,7 @@ class RegisterView(View):
         mobile = request.POST.get('mobile')
         allow = request.POST.get('allow')
 
-        # 2 校验参数
+        # <2> 校验参数
         # * 0.判空
         if not all([username, password, password2, mobile, allow]):
             return http.HttpResponseForbidden('缺少参数！')
@@ -48,6 +49,9 @@ class RegisterView(View):
         if allow != 'on':
             return http.HttpResponseForbidden('请求协议！')
 
-        # 3 注册用户
+        # <3> 注册用户
+        # from apps.users.models import User  --> 自定义用户类User
+        User.objects.create_user(username=username, password=password, mobile=mobile)
 
-        # 4 重定向到首页
+        # <4> 重定向到首页
+        return http.HttpResponseForbidden('重定向到首页')

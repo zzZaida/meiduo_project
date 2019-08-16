@@ -46,17 +46,17 @@
 					</li>
 					<li>
 						<label>密码:</label>
-						<input type="password" name="password" id="pwd" v-on:blur="check_pwd" v-model="password">
+						<input type="password" name="password" id="pwd" v-on:blur="check_password" v-model="password">
 						<span class="error_tip" v-show="error_password">[[error_password_message]]</span>
 					</li>
 					<li>
 						<label>确认密码:</label>
-						<input type="password" name="password2" id="cpwd" v-on:blur="check_cpwd" v-model="password2">
+						<input type="password" name="password2" id="cpwd" v-on:blur="check_password2" v-model="password2">
 						<span class="error_tip" v-show="error_check_password">[[error_password2_message]]</span>
 					</li>
 					<li>
 						<label>手机号:</label>
-						<input type="text" name="mobile" id="phone" v-on:blur="check_phone" v-model="mobile">
+						<input type="text" name="mobile" id="phone" v-on:blur="check_mobile" v-model="mobile">
 						<span class="error_tip" v-show="error_phone">[[error_mobile_message]]</span>
 					</li>
 					<li>
