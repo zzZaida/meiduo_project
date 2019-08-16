@@ -11,6 +11,7 @@
 {#    Uncaught ReferenceError: host is not defined --> 导包host.js  #}
     <script src="{{ static('js/host.js') }}"></script>
 {#    Uncaught ReferenceError: axios is not defined #}
+    <script src="{{ static('js/axios-0.18.0.min.js') }}"></script>
 
 
 </head>
@@ -31,7 +32,8 @@
 				<a href="{{ static('login.html') }}">登录</a>
 			</div>
 			<div class="reg_form clearfix">
-				<form method="post" class="register_form">
+                {#  submit 当用户点击提交的时候 先进行js的验证              #}
+				<form method="post" class="register_form" @submit="on_submit">
 {#  报错 ---> Forbidden (403)   CSRF verification failed. Request aborted.#}
                     {{ csrf_input }}
 				<ul>
@@ -40,22 +42,22 @@
 {#  user_name --> username --> 前端代码也有缓存 ---> 记得刷新  #}
 {#  blur(失去焦点)       v-model(双向绑定)     标签 --> JS 里面的变量传 #}
 						<input type="text" name="username" id="user_name" v-on:blur="check_username" v-model="username">
-						<span class="error_tip" v-show="error_name">请输入5-20个字符的用户</span>
+						<span class="error_tip" v-show="error_name">[[ error_name_message ]]</span>
 					</li>
 					<li>
 						<label>密码:</label>
 						<input type="password" name="password" id="pwd" v-on:blur="check_pwd" v-model="password">
-						<span class="error_tip" v-show="error_password">请输入8-20位的密码</span>
+						<span class="error_tip" v-show="error_password">[[error_password_message]]</span>
 					</li>
 					<li>
 						<label>确认密码:</label>
 						<input type="password" name="password2" id="cpwd" v-on:blur="check_cpwd" v-model="password2">
-						<span class="error_tip" v-show="error_check_password">两次输入的密码不一致</span>
+						<span class="error_tip" v-show="error_check_password">[[error_password2_message]]</span>
 					</li>
 					<li>
 						<label>手机号:</label>
 						<input type="text" name="mobile" id="phone" v-on:blur="check_phone" v-model="mobile">
-						<span class="error_tip" v-show="error_phone">请输入正确的手机号码</span>
+						<span class="error_tip" v-show="error_phone">[[error_mobile_message]]</span>
 					</li>
 					<li>
                         <label>图形验证码:</label>
@@ -72,7 +74,7 @@
 					<li class="agreement">
 						<input type="checkbox" name="allow" id="allow" checked="checked" v-on:blur="check_allow" v-model="allow">
 						<label>同意”美多商城用户使用协议“</label>
-						<span class="error_tip" v-show="error_allow">请勾选用户协议</span>
+						<span class="error_tip" v-show="error_allow">[[error_allow_message]]</span>
 					</li>
 					<li class="reg_sub">
 						<input type="submit" value="注 册">
