@@ -10,6 +10,7 @@ from django import http
 
 from apps.users.models import User
 from meiduo_mall.settings.development import logger
+from utils.response_code import RETCODE
 
 
 class RegisterView(View):
@@ -35,6 +36,8 @@ class RegisterView(View):
         # * 1.用户名: ---------判空,正则校验,是否重复
         if not re.match('^[a-zA-Z0-9_-]{5,20}$', username):
             return http.HttpResponseForbidden('请输入5-20个字符的用户名')
+        # 判断用户名是否重复 ---- username-->给后台传递-->接收参数-->后台2次校验参数-->查询filter().count()
+
         # * 2.密码:   --------- 判空,正则校验
         if not re.match('^[0-9A-Za-z]{8,20}$', password):
             return http.HttpResponseForbidden('请输入8-20位的密码')
@@ -77,7 +80,18 @@ class RegisterView(View):
 # "\x80\x04\x95\x97\x00\x00\x00\x00\x00\x00\x00}\x94(\x8c\x0f_auth_user_hash\x94\x8c(63f00bc33873fb5c9317bc8366da5d8676531df8
 # \x94\x8c\r_auth_user_id\x94\x8c\x018\x94\x8c\x12_auth_user_backend\x94\x8c)django.contrib.auth.backends.ModelBackend\x94u."
 
-
     # <5> 重定向到首页
         # return http.HttpResponse('重定向到首页')
         return redirect(reverse('contents:index'))
+
+
+# <2> 判断用户名是否重复
+class UsernameCountView(View):
+    def get(self, request, username):
+        # 1 接收参数
+        # 2 校验正则
+        if not re.match('^[a-zA-Z0-9_-]{5,20}$', username):
+            return http.HttpResponseForbidden('请输入5-20个字符的用户名')
+        # 3 查询数据库的用户名
+        count = User.objects.filter(username=username).count()
+        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'count': count})
