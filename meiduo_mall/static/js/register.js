@@ -3,6 +3,7 @@ var vm = new Vue({
     // 修改Vue变量的读取语法，避免和django模板语法冲突
     delimiters: ['[[', ']]'],
     data: {
+        // v-show 用的
         host: host,
         error_name: false,
         error_password: false,
@@ -12,6 +13,7 @@ var vm = new Vue({
         error_image_code: false,
         error_sms_code: false,
         error_allow: false,
+        // 提示框用的
         error_name_message: '请输入5-20个字符的用户',
         error_password_message: '请输入8-20位的密码',
         error_password2_message: '两次输入的密码不一致',
@@ -65,7 +67,25 @@ var vm = new Vue({
                 this.error_name_message = '请输入5-20个字符的用户名';
                 this.error_name = true;
             }
-
+        //  如果符合要求 --> 才发送ajax请求 --判断用户名是否重复
+            if(!this.error_name){
+            //    http://www.meiduo.site:8000  /usernames/  itcast001  /count/
+            //    url默认是 JSON 格式
+                let url = this.host + "/usernames/" + this.username + "/count/"
+                axios(url)
+                    .then((response)=>{
+                    //  如果后台传回来的 count > 0 弹提示框
+                        if(response.data.count > 0){
+                            this.error_name_message = '用户已经存在！';
+                            this.error_name = true;
+                        }else{
+                            this.error_name = false;
+                        }
+                    })
+                    .catch((error)=>{
+                        console.log(error.response)
+                    })
+            }
 
         },
         // 检查密码
@@ -75,14 +95,14 @@ var vm = new Vue({
                 this.error_password = false;
             } else {
                 this.error_password = true;
-                this.error_name_message = '请输入8-20密码';
+                this.error_password_message = '请输入8-20密码';
             }
         },
         // 确认密码
         check_password2: function () {
             if (this.password != this.password2) {
                 this.error_check_password = true;
-                 this.error_name_message = '两次密码不一致';
+                 this.error_password2_message = '两次密码不一致';
             } else {
                 this.error_check_password = false;
             }
