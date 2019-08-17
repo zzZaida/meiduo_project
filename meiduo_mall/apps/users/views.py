@@ -95,3 +95,16 @@ class UsernameCountView(View):
         # 3 查询数据库的用户名
         count = User.objects.filter(username=username).count()
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'count': count})
+
+
+# <3> 判断手机号是否重复
+# 后端接口认证 --->   http://www.meiduo.site:8000/mobiles/17638121602/count/
+class MobileCountView(View):
+    def get(self, request, mobile):
+        # 1 接收参数
+        # 2 校验正则
+        if not re.match('^1[345789]\d{9}$', mobile):
+            return http.HttpResponseForbidden('请输入正确的手机号码')
+        # 3 查询数据库 mobile 字段   返回个数
+        count = User.objects.filter(mobile=mobile).count()
+        return http.JsonResponse({'code':RETCODE.OK, 'errmsg':'OK', 'count': count})
