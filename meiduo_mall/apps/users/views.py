@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
@@ -56,11 +57,27 @@ class RegisterView(View):
         # 交互数据库的地方 最好预处理
         try:
             # from apps.users.models import User  --> 自定义用户类User
-            User.objects.create_user(username=username, password=password, mobile=mobile)
+            user = User.objects.create_user(username=username, password=password, mobile=mobile)
         except Exception as e:
             logger.error(e)
             return render(request, 'register.html')
 
-        # <4> 重定向到首页
+        # <4> 保持登录状态：cookie --session(django自带)
+        # from django.contrib.auth import login
+        login(request, user)
+
+# redis-cli
+# 127.0.0.1:6379> keys *
+# 1) "django_redis_key"
+# 127.0.0.1:6379> select 1
+# OK
+# 127.0.0.1:6379[1]> keys *
+# 1) ":1:django.contrib.sessions.cachekd572q3dxu4g6oxagre9bcor1w5o8wxb"
+# 127.0.0.1:6379[1]> get :1:django.contrib.sessions.cachekd572q3dxu4g6oxagre9bcor1w5o8wxb
+# "\x80\x04\x95\x97\x00\x00\x00\x00\x00\x00\x00}\x94(\x8c\x0f_auth_user_hash\x94\x8c(63f00bc33873fb5c9317bc8366da5d8676531df8
+# \x94\x8c\r_auth_user_id\x94\x8c\x018\x94\x8c\x12_auth_user_backend\x94\x8c)django.contrib.auth.backends.ModelBackend\x94u."
+
+
+    # <5> 重定向到首页
         # return http.HttpResponse('重定向到首页')
         return redirect(reverse('contents:index'))
