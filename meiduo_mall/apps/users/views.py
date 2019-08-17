@@ -107,4 +107,28 @@ class MobileCountView(View):
             return http.HttpResponseForbidden('请输入正确的手机号码')
         # 3 查询数据库 mobile 字段   返回个数
         count = User.objects.filter(mobile=mobile).count()
-        return http.JsonResponse({'code':RETCODE.OK, 'errmsg':'OK', 'count': count})
+        return http.JsonResponse({'code':RETCODE.OK, 'errmsg': 'OK', 'count': count})
+
+
+# 4.图片验证码 image_codes/(?P<uuid>[\w-]+)/
+class ImageCodeView(View):
+    # UUID 唯一标识符
+    def get(self, request, uuid):
+
+        # 1 接收参数
+        # 2 校验 uuid 正则
+
+        # 3 生成图片验证码
+        from libs.captcha.captcha import captcha
+        text, image = captcha.generate_captcha()
+
+        # 4 验证码数字  存储到 redis
+        # 4.1 导包
+        from django_redis import get_redis_connection
+        # 4.2 链接数据库
+        img_client = get_redis_connection('image_code')
+        # 4.3 存储  setex设置过期时间  5min--300s
+        img_client.setex(uuid, 300, text)
+
+       # 5 给前端返回 图片验证码 bytes
+        return http.HttpResponse(image, content_type='image/jpeg')
