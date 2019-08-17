@@ -222,3 +222,6 @@ if __name__ == '__main__':
     print(text)
     # 验证码图片二进制
     print(image)
+    # 二进制流写入本地 -- 显示图片
+    with open('image_code.png', 'wb')as f:
+        f.write(image)
