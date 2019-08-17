@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import View
 import re
 
@@ -61,4 +62,5 @@ class RegisterView(View):
             return render(request, 'register.html')
 
         # <4> 重定向到首页
-        return http.HttpResponseForbidden('重定向到首页')
+        # return http.HttpResponse('重定向到首页')
+        return redirect(reverse('contents:index'))

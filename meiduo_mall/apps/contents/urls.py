@@ -4,8 +4,7 @@ from django.contrib import admin
 
 from . import views
 
+# 根路由
 urlpatterns = [
-
-    url(r'^register$', views.RegisterView.as_view()),
-
+    url(r'^$', views.IndexView.as_view(), name='index'),
 ]

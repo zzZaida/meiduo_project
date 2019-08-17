@@ -18,6 +18,11 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
+    # 1 注册
     url(r'^', include('apps.users.urls')),
+
+    # 2 首页    namespace='contents'--> 重定向要用
+    url(r'^', include('apps.contents.urls', namespace='contents'))
 
 ]
