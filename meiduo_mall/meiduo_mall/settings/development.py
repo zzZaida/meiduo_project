@@ -236,3 +236,7 @@ logger = logging.getLogger('django')
 # AUTH_USER_MODEL = 'auth.User'  --> 系统源代码
 # AUTH_USER_MODEL = '子应用名称.模型类的名字'
 AUTH_USER_MODEL = 'users.User'
+
+
+# 配置 登录路由
+LOGIN_URL = '/login/'

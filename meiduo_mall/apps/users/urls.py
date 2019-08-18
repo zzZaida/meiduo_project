@@ -18,7 +18,10 @@ urlpatterns = [
     # 4.登录页 login/
     url(r'^login/$', views.LoginView.as_view(), name='login'),
 
-    # 5 退出 logout
+    # 5 退出 logout/
     url(r'^logout/$', views.LogoutView.as_view()),
+
+    # 6 个人中心 	/info/
+    url(r'^info/$', views.UserInfoView.as_view()),
 
 ]

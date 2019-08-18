@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -15,6 +16,7 @@ from meiduo_mall.settings.development import logger
 from utils.response_code import RETCODE
 
 
+# 1 注册页面
 class RegisterView(View):
     # 1.注册页面显示
     def get(self,request):
@@ -189,3 +191,9 @@ class LogoutView(View):
         response.delete_cookie('username')
 
         return response
+
+# 6 个人中心 ---隐私信息LoginRequiredMixin
+# from django.contrib.auth.mixins import LoginRequiredMixin
+class UserInfoView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request,'user_center_info.html')
