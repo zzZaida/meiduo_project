@@ -10,6 +10,7 @@ import re
 from django import http
 
 from apps.users.models import User
+from apps.verifications import contants
 from meiduo_mall.settings.development import logger
 from utils.response_code import RETCODE
 
@@ -32,42 +33,42 @@ class RegisterView(View):
 
         # <2> 校验参数
         # * 0.判空
-        if not all([username, password, password2, mobile, allow]):
-            return http.HttpResponseForbidden('缺少参数！')
-        # * 1.用户名: ---------判空,正则校验,是否重复
-        if not re.match('^[a-zA-Z0-9_-]{5,20}$', username):
-            return http.HttpResponseForbidden('请输入5-20个字符的用户名')
-        # 判断用户名是否重复 ---- username-->给后台传递-->接收参数-->后台2次校验参数-->查询filter().count()
-
-        # * 2.密码:   --------- 判空,正则校验
-        if not re.match('^[0-9A-Za-z]{8,20}$', password):
-            return http.HttpResponseForbidden('请输入8-20位的密码')
-        # * 3.确认密码: ---------判空,判断是否相等
-        if password2 != password:
-            return http.HttpResponseForbidden('两次密码输入不一致')
-        # * 4.手机号:---------   判空,正则校验,是否重复
-        if not re.match('^1[345789]\d{9}$', mobile):
-            return http.HttpResponseForbidden('请输入正确的手机号码')
-
-        # * 5.图形验证码
-        # * 6.短信验证码
-        sms_code = request.POST.get('msg_code')
-
-        from django_redis import get_redis_connection
-        sms_client = get_redis_connection('sms_code')
-        sms_code_redis = sms_client.get('sms_%s' % mobile)
-
-        if sms_code_redis is None:
-            return render(request, 'register.html', {'sms_code_errmsg': '无效的短信验证码'})
-        # 删除 sms_code_redis
-        sms_client.delete('sms_%s' % mobile)
-
-        if sms_code != sms_code_redis.decode():
-            return render(request, 'register.html', {'sms_code_errmsg': '短信验证码有误!'})
-
-        # * 7.同意”美多商城用户使用协议“: 判断是否选中
-        if allow != 'on':
-            return http.HttpResponseForbidden('请求协议！')
+        # if not all([username, password, password2, mobile, allow]):
+        #     return http.HttpResponseForbidden('缺少参数！')
+        # # * 1.用户名: ---------判空,正则校验,是否重复
+        # if not re.match('^[a-zA-Z0-9_-]{5,20}$', username):
+        #     return http.HttpResponseForbidden('请输入5-20个字符的用户名')
+        # # 判断用户名是否重复 ---- username-->给后台传递-->接收参数-->后台2次校验参数-->查询filter().count()
+        #
+        # # * 2.密码:   --------- 判空,正则校验
+        # if not re.match('^[0-9A-Za-z]{8,20}$', password):
+        #     return http.HttpResponseForbidden('请输入8-20位的密码')
+        # # * 3.确认密码: ---------判空,判断是否相等
+        # if password2 != password:
+        #     return http.HttpResponseForbidden('两次密码输入不一致')
+        # # * 4.手机号:---------   判空,正则校验,是否重复
+        # if not re.match('^1[345789]\d{9}$', mobile):
+        #     return http.HttpResponseForbidden('请输入正确的手机号码')
+        #
+        # # * 5.图形验证码
+        # # * 6.短信验证码
+        # sms_code = request.POST.get('msg_code')
+        #
+        # from django_redis import get_redis_connection
+        # sms_client = get_redis_connection('sms_code')
+        # sms_code_redis = sms_client.get('sms_%s' % mobile)
+        #
+        # if sms_code_redis is None:
+        #     return render(request, 'register.html', {'sms_code_errmsg': '无效的短信验证码'})
+        # # 删除 sms_code_redis
+        # sms_client.delete('sms_%s' % mobile)
+        #
+        # if sms_code != sms_code_redis.decode():
+        #     return render(request, 'register.html', {'sms_code_errmsg': '短信验证码有误!'})
+        #
+        # # * 7.同意”美多商城用户使用协议“: 判断是否选中
+        # if allow != 'on':
+        #     return http.HttpResponseForbidden('请求协议！')
 
         # <3> 注册用户
         # Duplicate(重复) entry 'itcast1' for key 'username'
@@ -96,7 +97,11 @@ class RegisterView(View):
 
     # <5> 重定向到首页
         # return http.HttpResponse('重定向到首页')
-        return redirect(reverse('contents:index'))
+        # 响应注册结果
+        response = redirect(reverse('contents:index'))
+        # 注册时用户名写入到cookie，有效期15天
+        response.set_cookie('username', user.username, max_age=3600 * 24 * 15)
+        return response
 
 
 # <2> 判断用户名是否重复
@@ -145,14 +150,15 @@ class LoginView(View):
         if not re.match(r'^[0-9A-Za-z]{8,20}$', password):
             return HttpResponseForbidden('请输入8-20位的密码')
 
-        # 3.验证用户名和密码--django自带的认证
+        # 3.验证用户名和密码(数据交互)--django自带的认证
         from django.contrib.auth import authenticate, login
         user = authenticate(username=username, password=password)
 
         if user is None:
             return render(request, 'login.html', {'account_errmsg': '用户名或密码错误'})
 
-        # 4.保持登录状态
+        # 4.保持登录状态: cookie ---session
+        # from django.contrib.auth import login
         login(request, user)
 
         # 5.是否记住用户名
@@ -163,5 +169,8 @@ class LoginView(View):
             # 记住用户名, 浏览器会话保持两周
             request.session.set_expiry(None)
 
-        # 6.返回响应结果
-        return redirect(reverse('contents:index'))
+        # 6.返回响应结果  跳转到首页  index
+        response = redirect(reverse('contents:index'))
+        # 注册时用户名写入到cookie,有效期15天
+        response.set_cookie('username', user.username, max_age=contants.SET_COOKIE_EXPIRE)
+        return response
