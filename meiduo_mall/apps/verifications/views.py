@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views import View
 from apps.verifications import contants
 from meiduo_mall.settings.development import logger
+from utils.response_code import RETCODE
 
 
 # <4> 图片验证码 image_codes/(?P<uuid>[\w-]+)/
@@ -58,8 +59,19 @@ class SMSCodeView(View):
         sms_code = "%06d" % randint(100000, 999999)
 
         # 4.存储 随机6位 redis(3步)
-        sms_redis_client = get_redis_connection('sms_code')
-        sms_redis_client.setex("sms_%s" % mobile, contants.SMS_CODE_REDIS_EXPIRE, sms_code)
+        sms_client = get_redis_connection('sms_code')
+        # 后台避免 短信验证码重复流程
+        # (1)获取 频繁发送短信的 标识
+        send_flag = sms_client.get('send_flag_%s' % mobile)
+        # (2)判断标识是否存在
+        if send_flag:
+            # return http.JsonResponse({'code': RETCODE.THROTTLINGERR, 'errmsg': '发送短信过于频繁'})
+            return http.JsonResponse({'code': "4002", 'errmsg': '发送短信过于频繁666'})
+        # (3)标识不存在,  重新倒计时
+        # 保存短信验证码
+        sms_client.setex('sms_%s' % mobile, contants.SMS_CODE_REDIS_EXPIRE, sms_code)
+        # 重新写入send_flag
+        sms_client.setex('send_flag_%s' % mobile, contants.SEND_SMS_CODE_INTERVAL, 1)
 
         # 5.发送短信-- 第三方联容云--
         # from libs.yuntongxun.sms import CCP

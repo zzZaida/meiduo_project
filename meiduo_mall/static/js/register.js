@@ -161,6 +161,7 @@ var vm = new Vue({
             return;
         }
         this.sending_flag = true;
+
         // 校验参数
         this.check_mobile();
         this.check_image_code();
