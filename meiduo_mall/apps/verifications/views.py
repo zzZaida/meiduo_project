@@ -77,7 +77,11 @@ class SMSCodeView(View):
         # from libs.yuntongxun.sms import CCP
         #  CCP().send_template_sms('手机号', ['验证码', '过期时间5分钟'], 短信模板1)
         # CCP().send_template_sms(mobile, [sms_code, 5], 1)
-        print("当前验证码是:", sms_code)
+        # print("当前验证码是:", sms_code)
+
+        # 使用异步发---触发任务
+        from celery_tasks.sms.tasks import ccp_send_sms_code
+        ccp_send_sms_code.delay(mobile, sms_code)
 
         # 6.返回响应对象
         return http.JsonResponse({'code': '0', 'errmsg': '发送短信成功'})
