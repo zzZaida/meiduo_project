@@ -51,9 +51,18 @@ class RegisterView(View):
         # * 5.图形验证码
         # * 6.短信验证码
         sms_code = request.POST.get('msg_code')
+
         from django_redis import get_redis_connection
         sms_client = get_redis_connection('sms_code')
-        sms_code_redis = sms_client.get('sms_%s')
+        sms_code_redis = sms_client.get('sms_%s' % mobile)
+
+        if sms_code_redis is None:
+            return render(request, 'register.html', {'sms_code_errmsg': '无效的短信验证码'})
+        # 删除 sms_code_redis
+        sms_client.delete('sms_%s' % mobile)
+
+        if sms_code != sms_code_redis.decode():
+            return render(request, 'register.html', {'sms_code_errmsg': '短信验证码有误!'})
 
         # * 7.同意”美多商城用户使用协议“: 判断是否选中
         if allow != 'on':

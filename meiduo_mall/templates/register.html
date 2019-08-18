@@ -66,12 +66,11 @@
                         <span class="error_tip" v-show="error_image_code">请填写图形验证码</span>
                     </li>
 					<li>
-						<label>短信验证码:</label>
-						<input type="text" name="msg_code" id="msg_code" class="msg_input" v-on:blur="check_sms_code" v-model="sms_code">
-						<a href="javascript:;" class="get_msg_code">获取短信验证码</a>
-						<span class="error_tip" v-show="error_sms_code">请填写短信验证码</span>
-                        jkldfadiso
-					</li>
+                        <label>短信验证码:</label>
+                        <input type="text" v-model="sms_code" @blur="check_sms_code" name="sms_code" id="msg_code" class="msg_input">
+                        <a @click="send_sms_code" class="get_msg_code">[[ sms_code_tip ]]</a>
+                        <span class="error_tip" v-show="error_sms_code">[[ error_sms_code_message ]]</span>
+                    </li>
 					<li class="agreement">
 						<input type="checkbox" name="allow" id="allow" checked="checked" v-on:blur="check_allow" v-model="allow">
 						<label>同意”美多商城用户使用协议“</label>

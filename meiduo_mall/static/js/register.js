@@ -147,14 +147,66 @@ var vm = new Vue({
 
         },
         // 检查短信验证码
-        check_sms_code: function () {
-            if (!this.sms_code) {
+       check_sms_code(){
+            if(this.sms_code.length != 6){
                 this.error_sms_code_message = '请填写短信验证码';
                 this.error_sms_code = true;
             } else {
                 this.error_sms_code = false;
             }
+       },
+        send_sms_code(){
+        // 避免重复点击
+            if (this.sending_flag == true) {
+            return;
+        }
+        this.sending_flag = true;
+        // 校验参数
+        this.check_mobile();
+        this.check_image_code();
+        if (this.error_mobile == true || this.error_image_code == true) {
+        this.sending_flag = false;
+        return;
+        }
+        // 请求短信验证码
+        let url = '/sms_codes/' + this.mobile + '/?image_code=' + this.image_code+'&uuid='+ this.uuid;
+        axios.get(url, {
+            responseType: 'json'
+        })
+            .then(response => {
+                if (response.data.code == '0') {
+                    // 倒计时60秒
+                    var num = 60;
+                    var t = setInterval(() => {
+                        if (num == 1) {
+                            clearInterval(t);
+                            this.sms_code_tip = '获取短信验证码';
+                            this.sending_flag = false;
+                        } else {
+                            num -= 1;
+                            // 展示倒计时信息
+                            this.sms_code_tip = num + '秒';
+                        }
+                    }, 1000, 60)
+                } else {
+                    if (response.data.code == '4001') {
+                        this.error_image_code_message = response.data.errmsg;
+                        this.error_image_code = true;
+                    } else { // 4002
+                        this.error_sms_code_message = response.data.errmsg;
+                        this.error_sms_code = true;
+                    }
+                    this.generate_image_code();
+                    this.sending_flag = false;
+                }
+            })
+            .catch(error => {
+                console.log(error.response);
+                this.sending_flag = false;
+            })
         },
+
+
         // 检查是否勾选协议
         check_allow: function () {
             if (!this.allow) {
