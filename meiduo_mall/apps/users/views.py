@@ -104,7 +104,7 @@ class RegisterView(View):
         return response
 
 
-# <2> 判断用户名是否重复
+# 2 判断用户名是否重复
 class UsernameCountView(View):
     def get(self, request, username):
         # 1 接收参数
@@ -116,7 +116,7 @@ class UsernameCountView(View):
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'count': count})
 
 
-# <3> 判断手机号是否重复
+# 3 判断手机号是否重复
 # 后端接口认证 --->   http://www.meiduo.site:8000/mobiles/17638121602/count/
 class MobileCountView(View):
     def get(self, request, mobile):
@@ -131,8 +131,8 @@ class MobileCountView(View):
 
 # 4 登录
 class LoginView(View):
-    def get(self, request):
-        return render(request, 'login.html')
+    def get(self,request):
+        return render(request,'login.html')
 
     def post(self, request):
         # 1.接收三个参数
@@ -173,4 +173,19 @@ class LoginView(View):
         response = redirect(reverse('contents:index'))
         # 注册时用户名写入到cookie,有效期15天
         response.set_cookie('username', user.username, max_age=contants.SET_COOKIE_EXPIRE)
+        return response
+
+
+# 5 退出登录
+class LogoutView(View):
+    def get(self, request):
+        # 1.退出的本质 (删除session)
+        from django.contrib.auth import logout
+        logout(request)
+
+        # 重定向到登录页面
+        # 2.清空cookie --首页用户名
+        response = redirect(reverse('users:login'))
+        response.delete_cookie('username')
+
         return response
