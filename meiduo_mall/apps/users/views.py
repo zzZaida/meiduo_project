@@ -172,7 +172,14 @@ class LoginView(View):
             request.session.set_expiry(None)
 
         # 6.返回响应结果  跳转到首页  index
-        response = redirect(reverse('contents:index'))
+        # 6.1 登录优化--> 未登录--点击个人中心-->登录页面-->个人中心
+        # http://www.meiduo.site:8000/login/?next=/info/
+        next = request.GET.get('next')
+        if next:
+            response = redirect(next)
+        else:
+            response = redirect(reverse('contents:index'))
+
         # 注册时用户名写入到cookie,有效期15天
         response.set_cookie('username', user.username, max_age=contants.SET_COOKIE_EXPIRE)
         return response
@@ -197,3 +204,5 @@ class LogoutView(View):
 class UserInfoView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request,'user_center_info.html')
+
+
