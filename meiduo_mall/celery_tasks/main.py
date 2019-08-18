@@ -16,3 +16,6 @@ celery_app.config_from_object('celery_tasks.config')
 
 # 5.自动注册celery任务
 celery_app.autodiscover_tasks(['celery_tasks.sms'])
+
+# 终端启动Celery服务
+# celery -A celery_tasks.main worker -l info

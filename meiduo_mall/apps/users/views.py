@@ -37,41 +37,41 @@ class RegisterView(View):
         # * 0.判空
         # if not all([username, password, password2, mobile, allow]):
         #     return http.HttpResponseForbidden('缺少参数！')
-        # # * 1.用户名: ---------判空,正则校验,是否重复
-        # if not re.match('^[a-zA-Z0-9_-]{5,20}$', username):
-        #     return http.HttpResponseForbidden('请输入5-20个字符的用户名')
-        # # 判断用户名是否重复 ---- username-->给后台传递-->接收参数-->后台2次校验参数-->查询filter().count()
-        #
-        # # * 2.密码:   --------- 判空,正则校验
-        # if not re.match('^[0-9A-Za-z]{8,20}$', password):
-        #     return http.HttpResponseForbidden('请输入8-20位的密码')
-        # # * 3.确认密码: ---------判空,判断是否相等
-        # if password2 != password:
-        #     return http.HttpResponseForbidden('两次密码输入不一致')
-        # # * 4.手机号:---------   判空,正则校验,是否重复
-        # if not re.match('^1[345789]\d{9}$', mobile):
-        #     return http.HttpResponseForbidden('请输入正确的手机号码')
-        #
-        # # * 5.图形验证码
-        # # * 6.短信验证码
-        # sms_code = request.POST.get('msg_code')
-        #
-        # from django_redis import get_redis_connection
-        # sms_client = get_redis_connection('sms_code')
-        # sms_code_redis = sms_client.get('sms_%s' % mobile)
-        #
-        # if sms_code_redis is None:
-        #     return render(request, 'register.html', {'sms_code_errmsg': '无效的短信验证码'})
-        # # 删除 sms_code_redis
-        # sms_client.delete('sms_%s' % mobile)
-        #
-        # if sms_code != sms_code_redis.decode():
-        #     return render(request, 'register.html', {'sms_code_errmsg': '短信验证码有误!'})
-        #
-        # # * 7.同意”美多商城用户使用协议“: 判断是否选中
-        # if allow != 'on':
-        #     return http.HttpResponseForbidden('请求协议！')
+        # * 1.用户名: ---------判空,正则校验,是否重复
+        if not re.match('^[a-zA-Z0-9_-]{5,20}$', username):
+            return http.HttpResponseForbidden('请输入5-20个字符的用户名')
+        # 判断用户名是否重复 ---- username-->给后台传递-->接收参数-->后台2次校验参数-->查询filter().count()
 
+        # * 2.密码:   --------- 判空,正则校验
+        if not re.match('^[0-9A-Za-z]{8,20}$', password):
+            return http.HttpResponseForbidden('请输入8-20位的密码')
+        # * 3.确认密码: ---------判空,判断是否相等
+        if password2 != password:
+            return http.HttpResponseForbidden('两次密码输入不一致')
+        # * 4.手机号:---------   判空,正则校验,是否重复
+        if not re.match('^1[345789]\d{9}$', mobile):
+            return http.HttpResponseForbidden('请输入正确的手机号码')
+
+        # * 5.图形验证码
+        # * 6.短信验证码
+        sms_code = request.POST.get('msg_code')
+
+        from django_redis import get_redis_connection
+        sms_client = get_redis_connection('sms_code')
+        sms_code_redis = sms_client.get('sms_%s' % mobile)
+
+        if sms_code_redis is None:
+            return render(request, 'register.html', {'sms_code_errmsg': '无效的短信验证码'})
+        # 删除 sms_code_redis
+        sms_client.delete('sms_%s' % mobile)
+
+        if sms_code != sms_code_redis.decode():
+            return render(request, 'register.html', {'sms_code_errmsg': '短信验证码有误!'})
+
+        # * 7.同意”美多商城用户使用协议“: 判断是否选中
+        if allow != 'on':
+            return http.HttpResponseForbidden('请求协议！')
+        #
         # <3> 注册用户
         # Duplicate(重复) entry 'itcast1' for key 'username'
         # 交互数据库的地方 最好预处理

@@ -22,7 +22,7 @@ class ImageCodeView(View):
         # 4.1 导包
         from django_redis import get_redis_connection
         # 4.2 链接数据库
-        img_client = get_redis_connection('image_code')
+        img_client = get_redis_connection('verify_image_code')
         # 4.3 存储  setex设置过期时间  5min--300s
         img_client.setex(uuid, contants.IMAGE_CODE_REDIS_EXPIRE, text)
 
@@ -34,10 +34,10 @@ class ImageCodeView(View):
 class SMSCodeView(View):
     def get(self, request, mobile):
         # 1. 接收 2个 mobile; 图片验证码img_code
-        image_code = request.GET.get('image_code')
         uuid = request.GET.get('image_code_id')
+        image_code = request.GET.get('image_code')
 
-        # 2.验证码 img_code和redis存储的验证码 是否一致 (1 redis取出来(4步) 2 判断是否相等)
+        # 2.验证码 img_code和redis存储的验证码 是否一致 (1.redis取出来(4步) 2.判断是否相等 3.redis img_code 删除)
         from django_redis import get_redis_connection
         img_client = get_redis_connection('verify_image_code')
         img_code_redis = img_client.get('img_%s' % uuid)
