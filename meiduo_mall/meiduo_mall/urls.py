@@ -23,6 +23,10 @@ urlpatterns = [
     url(r'^', include('apps.users.urls')),
 
     # 2 首页    namespace='contents'--> 重定向要用
-    url(r'^', include('apps.contents.urls', namespace='contents'))
+    url(r'^', include('apps.contents.urls', namespace='contents')),
+
+    # 3 验证码(image 短信)
+    url(r'^', include('apps.verifications.urls'))
+
 
 ]

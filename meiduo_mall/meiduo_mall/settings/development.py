@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # 注册子应用
     'apps.users',
     'apps.contents',
+    'apps.verifications',
 ]
 
 MIDDLEWARE = [
@@ -163,6 +164,14 @@ CACHES = {
     "verify_image_code": {  # verify_image_code
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    # sms_code 存储 3 号数据库
+    "sms_code": {  # 保存短信验证码--3号库
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/3",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }

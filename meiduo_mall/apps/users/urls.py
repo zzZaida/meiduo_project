@@ -15,6 +15,4 @@ urlpatterns = [
     # 3.手机号是否重复 /mobiles/(?P<mobile>1[3-9]\d{9})/count/
     url(r'^mobiles/(?P<mobile>1[3-9]\d{9})/count/$', views.MobileCountView.as_view()),
 
-    # 4.图片验证码 image_codes/(?P<uuid>[\w-]+)/
-    url(r'^image_codes/(?P<uuid>[\w-]+)/$', views.ImageCodeView.as_view()),
 ]
