@@ -24,7 +24,7 @@ class ImageCodeView(View):
         # 4.2 链接数据库
         img_client = get_redis_connection('verify_image_code')
         # 4.3 存储  setex设置过期时间  5min--300s
-        img_client.setex(uuid, contants.IMAGE_CODE_REDIS_EXPIRE, text)
+        img_client.setex('img_%s' % uuid, contants.IMAGE_CODE_REDIS_EXPIRE, text)
 
        # 5 给前端返回 图片验证码 bytes
         return http.HttpResponse(image, content_type='image/jpeg')
@@ -56,10 +56,11 @@ class SMSCodeView(View):
 
         # 3.生成随机6位 短信验证码内容 random.randit()
         from random import randint
-        sms_code = "%06d" % randint(100000, 999999)
+        sms_code = "%06d" % randint(0, 999999)
 
         # 4.存储 随机6位 redis(3步)
         sms_client = get_redis_connection('sms_code')
+        print(sms_code)
         # 后台避免 短信验证码重复流程
         # (1)获取 频繁发送短信的 标识
         send_flag = sms_client.get('send_flag_%s' % mobile)
@@ -69,15 +70,15 @@ class SMSCodeView(View):
             return http.JsonResponse({'code': "4002", 'errmsg': '发送短信过于频繁666'})
         # (3)标识不存在,  重新倒计时
         # 保存短信验证码
-        sms_client.setex('sms_%s' % mobile, contants.SMS_CODE_REDIS_EXPIRE, sms_code)
+        # sms_client.setex('sms_%s' % mobile, contants.SMS_CODE_REDIS_EXPIRE, sms_code)
         # 重新写入send_flag
-        sms_client.setex('send_flag_%s' % mobile, contants.SEND_SMS_CODE_INTERVAL, 1)
+        # sms_client.setex('send_flag_%s' % mobile, contants.SEND_SMS_CODE_INTERVAL, 1)
 
         # pipeline操作Redis数据库---> 通过减少客户端与Redis的通信次数来实现降低往返延时时间
         # 创建Redis管道
         pl = sms_client.pipeline()
         # 将Redis请求添加到队列
-        pl.setex('sms_%s' % mobile, contants.SMS_CODE_REDIS_EXPIRES, sms_code)
+        pl.setex('sms_%s' % mobile, contants.SMS_CODE_REDIS_EXPIRE, sms_code)
         pl.setex('send_flag_%s' % mobile, contants.SEND_SMS_CODE_INTERVAL, 1)
         # 执行请求
         pl.execute()
