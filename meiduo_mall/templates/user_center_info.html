@@ -70,11 +70,11 @@
 				<div class="info_con clearfix">
 					<h3 class="common_title2">基本信息</h3>
 					<ul class="user_info_list">
-						<li><span>用户名：</span>张山</li>
-						<li><span>联系方式：</span>18500001111</li>
+						<li><span>用户名：</span>[[username]]</li>
+						<li><span>联系方式：</span>[[mobile]]</li>
 						<li>
 	                    <span>Email：</span>
-	                    <input type="text" name="email" class="email">
+	                    <input type="text" name="email" class="email" v-model="email">
 	                    <input type="button" name="" value="保 存">
 	                    <input type="reset" name="" value="取 消">
 	                	</li>			
@@ -152,6 +152,13 @@
 		<p>电话：010-****888    京ICP备*******8号</p>
 	</div>
 	</div>
+    <script>
+        let username = "{{ username }}";
+        let mobile = "{{ mobile }}";
+        let email = "{{ email }}";
+        let email_active = "{{ email_active }}";
+    </script>
+    <script type="text/javascript" src="{{ static('js/common.js') }}"></script>
 	<script type="text/javascript" src="{{ static('js/user_center_info.js') }}"></script>
 </body>
 </html>

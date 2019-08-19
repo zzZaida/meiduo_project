@@ -204,7 +204,14 @@ class LogoutView(View):
 # from django.contrib.auth.mixins import LoginRequiredMixin
 class UserInfoView(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request,'user_center_info.html')
+        # request.user.username
+        context = {
+            'username': request.user.username,
+            'mobile': request.user.mobile,
+            'email': request.user.email,
+            'email_active': request.user.email_active
+        }
+        return render(request,'user_center_info.html', context)
 
 
 

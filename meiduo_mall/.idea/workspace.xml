@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1b3b0539-63a3-4e20-aa27-07229fe1b5a0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/users/utils.py" afterPath="$PROJECT_DIR$/apps/users/utils.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/users/models.py" afterPath="$PROJECT_DIR$/apps/users/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/users/views.py" afterPath="$PROJECT_DIR$/apps/users/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/user_center_info.html" afterPath="$PROJECT_DIR$/templates/user_center_info.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -46,37 +48,48 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="development.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/meiduo_mall/settings/development.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="529">
-              <caret line="246" column="0" lean-forward="true" selection-start-line="246" selection-start-column="0" selection-end-line="246" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/users/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-695">
-              <caret line="133" column="6" lean-forward="false" selection-start-line="133" selection-start-column="6" selection-end-line="133" selection-end-column="6" />
+            <state relative-caret-position="375">
+              <caret line="206" column="31" lean-forward="true" selection-start-line="206" selection-start-column="31" selection-end-line="206" selection-end-column="31" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
+                <element signature="e#576#3938#0" expanded="false" />
                 <element signature="e#623#662#0" expanded="false" />
                 <element signature="e#3987#4353#0" expanded="false" />
                 <element signature="e#4471#4833#0" expanded="false" />
+                <element signature="e#4867#6590#0" expanded="false" />
                 <element signature="e#6627#6923#0" expanded="false" />
-                <element signature="e#7068#7146#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="user_center_info.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/user_center_info.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="886">
+              <caret line="158" column="46" lean-forward="false" selection-start-line="158" selection-start-column="46" selection-end-line="158" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/users/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="16" column="29" lean-forward="false" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/users/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
+            <state relative-caret-position="199">
               <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
               <folding>
                 <element signature="e#16#69#0" expanded="true" />
@@ -85,26 +98,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="meiduo.tb_users" pinned="false" current-in-tab="false">
-        <entry file="dbDummy://dbtable:/33bcf16e/4322be9e-93f9-4648-a52a-4de903ad7468/meiduo.tb_users">
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/users/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+            <state relative-caret-position="375">
+              <caret line="21" column="25" lean-forward="false" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -138,6 +136,7 @@
       <find>image_code</find>
       <find>send_sms_code</find>
       <find>static</find>
+      <find>张山</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -168,9 +167,11 @@
         <option value="$PROJECT_DIR$/templates/register.html" />
         <option value="$PROJECT_DIR$/static/js/register.js" />
         <option value="$PROJECT_DIR$/apps/verifications/views.py" />
-        <option value="$PROJECT_DIR$/apps/users/views.py" />
         <option value="$PROJECT_DIR$/meiduo_mall/settings/development.py" />
         <option value="$PROJECT_DIR$/apps/users/utils.py" />
+        <option value="$PROJECT_DIR$/apps/users/models.py" />
+        <option value="$PROJECT_DIR$/apps/users/views.py" />
+        <option value="$PROJECT_DIR$/templates/user_center_info.html" />
       </list>
     </option>
   </component>
@@ -189,7 +190,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="53" />
     <option name="y" value="24" />
-    <option name="width" value="1096" />
+    <option name="width" value="1021" />
     <option name="height" value="1179" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -925,7 +926,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566180099292</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="2.封装 多账号的认证函数">
+      <created>1566181163682</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1566181163682</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TodoView">
@@ -938,10 +946,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="53" y="24" width="1096" height="1179" extended-state="6" />
+    <frame x="53" y="24" width="1021" height="1179" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19639468" sideWeight="0.49253732" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21144025" sideWeight="0.49253732" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32846716" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42424244" sideWeight="0.50766087" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32922202" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1006,7 +1014,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修改 register.html 文件" />
     <MESSAGE value="05-- 注册用户到数据库&#10;     from apps.users.models import User&#10;     User.objects.create_user(username=username, password=password, mobile=mobile)" />
     <MESSAGE value="05-- 注册首页的子应用&#10;     渲染 index.html 显示&#10;     users--views.py--&gt;redirect(reverse('contents:index'))" />
     <MESSAGE value="07-- 保持登录状态&#10;     from django.contrib.auth import login&#10;     login(request,user)" />
@@ -1031,23 +1038,16 @@
     <MESSAGE value="6-- pipeline的作用&#10;    redis&#10;    p1 = pipeline()&#10;    p1.setex()&#10;    p1.setex()&#10;    p1.execute()" />
     <MESSAGE value="修改BUG   前端 后台 K 要一致" />
     <MESSAGE value="&lt;第4天&gt;&#10;1. 多账号登录  自定义认证" />
-    <option name="LAST_COMMIT_MESSAGE" value="&lt;第4天&gt;&#10;1. 多账号登录  自定义认证" />
+    <MESSAGE value="2.封装 多账号的认证函数" />
+    <option name="LAST_COMMIT_MESSAGE" value="2.封装 多账号的认证函数" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="65" />
+      <option name="time" value="66" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/meiduo_mall/settings/development.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/users/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
@@ -1061,11 +1061,12 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#576#3938#0" expanded="false" />
             <element signature="e#623#662#0" expanded="false" />
             <element signature="e#3987#4353#0" expanded="false" />
             <element signature="e#4471#4833#0" expanded="false" />
+            <element signature="e#4867#6590#0" expanded="false" />
             <element signature="e#6627#6923#0" expanded="false" />
-            <element signature="e#7068#7146#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1091,11 +1092,12 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#576#3938#0" expanded="false" />
             <element signature="e#623#662#0" expanded="false" />
             <element signature="e#3987#4353#0" expanded="false" />
             <element signature="e#4471#4833#0" expanded="false" />
+            <element signature="e#4867#6590#0" expanded="false" />
             <element signature="e#6627#6923#0" expanded="false" />
-            <element signature="e#7068#7146#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1225,13 +1227,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="920">
           <caret line="74" column="39" lean-forward="false" selection-start-line="74" selection-start-column="39" selection-end-line="74" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/users/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" column="28" lean-forward="false" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1381,23 +1376,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbDummy://dbtable:/33bcf16e/4322be9e-93f9-4648-a52a-4de903ad7468/meiduo.tb_users">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+    <entry file="file://$USER_HOME$/.virtualenvs/meiduo_mall/lib/python3.5/site-packages/django/contrib/auth/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="115" column="0" lean-forward="false" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
           <folding />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/users/urls.py">
+    <entry file="file://$PROJECT_DIR$/templates/user_center_info.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+        <state relative-caret-position="886">
+          <caret line="158" column="46" lean-forward="false" selection-start-line="158" selection-start-column="46" selection-end-line="158" selection-end-column="46" />
           <folding />
         </state>
       </provider>
@@ -1412,34 +1402,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/users/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-695">
-          <caret line="133" column="6" lean-forward="false" selection-start-line="133" selection-start-column="6" selection-end-line="133" selection-end-column="6" />
+        <state relative-caret-position="375">
+          <caret line="206" column="31" lean-forward="true" selection-start-line="206" selection-start-column="31" selection-end-line="206" selection-end-column="31" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#576#3938#0" expanded="false" />
             <element signature="e#623#662#0" expanded="false" />
             <element signature="e#3987#4353#0" expanded="false" />
             <element signature="e#4471#4833#0" expanded="false" />
+            <element signature="e#4867#6590#0" expanded="false" />
             <element signature="e#6627#6923#0" expanded="false" />
-            <element signature="e#7068#7146#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.virtualenvs/meiduo_mall/lib/python3.5/site-packages/django/contrib/auth/__init__.py">
+    <entry file="dbDummy://dbtable:/33bcf16e/4322be9e-93f9-4648-a52a-4de903ad7468/meiduo.tb_users">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/users/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="115" column="0" lean-forward="false" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+        <state relative-caret-position="330">
+          <caret line="16" column="29" lean-forward="false" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/users/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
+        <state relative-caret-position="199">
           <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
           <folding>
             <element signature="e#16#69#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/users/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="21" column="25" lean-forward="false" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
