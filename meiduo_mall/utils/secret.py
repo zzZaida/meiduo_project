@@ -21,6 +21,6 @@ class SecretOauth(object):
         s = TimedJSONWebSignatureSerializer(settings.SECRET_KEY, expires_in=3600)
 
         # 1.2 加密数据
-        result = s.dumps(data)
+        result = s.loads(data)
 
         return result

@@ -238,12 +238,16 @@ class EmailView(LoginRequiredMixin, View):
             logger.error(e)
             return http.JsonResponse({'code':RETCODE.DBERR, 'errmsg': '添加邮箱失败'})
 
-        # 自动发邮件
+        # 自动发邮件(需要加密)
         token_value = {
             'user_id': request.user.id,
             'email': email
         }
-        verify_url = settings.EMAIL_ACTIVE_URL + "?token=" + json.dumps(token_value)
+        # 加密 --->对象方法SecretOauth()
+        from utils.secret import SecretOauth
+        secret_str = SecretOauth().dumps(token_value)
+#http://www.meiduo.site:8000/emails/verification/?token={%22user_id%22:%201,%20%22email%22:%20%2217638121602@163.com%22}
+        verify_url = settings.EMAIL_ACTIVE_URL + "?token=" + secret_str
         from celery_tasks.email.tasks import send_verify_email
         send_verify_email.delay(email, verify_url)
 
@@ -260,11 +264,20 @@ class VerifyEmailView(LoginRequiredMixin, View):
     def get(self, request):
         # 1.接收参数
         json_str = request.GET.get('token')
-        json_dict = json.loads(json_str)
+
+        # 解密
+        from utils.secret import SecretOauth
+        json_dict = SecretOauth().loads(json_str)
+        # 校验用户是否存在  同时邮箱也匹配
+        try:
+            user = User.objects.get(id=json_dict['user_id'], email=json_dict['email'])
+        except Exception as e:
+            logger.error(e)
+            return http.HttpResponseForbidden('无效的token')
 
         # 2.修改对象的 email_active 字段
-        request.user.email_active = True
-        request.user.save()
+        user.email_active = True
+        user.save()
 
         # 3.返回响应结果
         return redirect(reverse('users:info'))
