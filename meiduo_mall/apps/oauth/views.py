@@ -12,6 +12,7 @@ from django.conf import settings
 from utils.response_code import RETCODE
 
 
+# 1 客户端与美多商城交互
 class QQAuthURLView(View):
     def get(self, request):
 
@@ -25,3 +26,26 @@ class QQAuthURLView(View):
 
         # 3.返回给前端
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'login_url': login_url})
+
+
+# http://www.meiduo.site:8000
+# /oauth_callback?code=8FFD3C39375F28B6D0E9CE5FC14EF25C&state=None
+
+# 2 与QQ交互--> 接收 QQ 返回来的 code--> 获取openid
+class QQAuthUserView(View):
+    def get(self, request):
+        # 1.解析参数
+        code = request.GET.get('code')
+        # 认证
+        oauth = OAuthQQ(client_id=settings.QQ_CLIENT_ID,
+                        client_secret=settings.QQ_CLIENT_SECRET,
+                        redirect_uri=settings.QQ_REDIRECT_URI)
+
+        # 2. code-->token
+        token = oauth.get_access_token(code)
+
+        # 3. token-->openid
+        openid = oauth.get_open_id(token)
+
+        return http.HttpResponse(openid)
+    # EA3AB309F7F6384FE165C3234B061ECC
