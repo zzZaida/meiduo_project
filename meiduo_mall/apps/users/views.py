@@ -152,7 +152,7 @@ class LoginView(View):
         if not re.match(r'^[0-9A-Za-z]{8,20}$', password):
             return HttpResponseForbidden('请输入8-20位的密码')
 
-        # 3.验证用户名和密码(数据交互)--django自带的认证
+        # 3.验证用户名和密码(数据交互)--django自带的认证 authenticate()
         from django.contrib.auth import authenticate, login
         user = authenticate(username=username, password=password)
 
@@ -199,10 +199,12 @@ class LogoutView(View):
 
         return response
 
+
 # 6 个人中心 ---隐私信息LoginRequiredMixin
 # from django.contrib.auth.mixins import LoginRequiredMixin
 class UserInfoView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request,'user_center_info.html')
+
 
 
