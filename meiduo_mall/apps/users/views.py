@@ -218,7 +218,7 @@ class UserInfoView(LoginRequiredMixin, View):
 
 
 # 7 邮箱添加
-class EmailView(View):
+class EmailView(LoginRequiredMixin, View):
     def put(self,request):
         # 1.接收 请求体非表单参数 json
         json_bytes = request.body
@@ -250,3 +250,21 @@ class EmailView(View):
         # 4.返回前端结果
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '添加邮箱成功'})
 
+
+# 8 激活邮箱  /emails/verification/
+# http://www.meiduo.site:8000/emails/verification/
+# ?token={
+# "user_id": 1, "email": "17638121602@163.com"}
+class VerifyEmailView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        # 1.接收参数
+        json_str = request.GET.get('token')
+        json_dict = json.loads(json_str)
+
+        # 2.修改对象的 email_active 字段
+        request.user.email_active = True
+        request.user.save()
+
+        # 3.返回响应结果
+        return redirect(reverse('users:info'))
