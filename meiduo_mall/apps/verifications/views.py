@@ -73,6 +73,15 @@ class SMSCodeView(View):
         # 重新写入send_flag
         sms_client.setex('send_flag_%s' % mobile, contants.SEND_SMS_CODE_INTERVAL, 1)
 
+        # pipeline操作Redis数据库---> 通过减少客户端与Redis的通信次数来实现降低往返延时时间
+        # 创建Redis管道
+        pl = sms_client.pipeline()
+        # 将Redis请求添加到队列
+        pl.setex('sms_%s' % mobile, contants.SMS_CODE_REDIS_EXPIRES, sms_code)
+        pl.setex('send_flag_%s' % mobile, contants.SEND_SMS_CODE_INTERVAL, 1)
+        # 执行请求
+        pl.execute()
+
         # 5.发送短信-- 第三方联容云--
         # from libs.yuntongxun.sms import CCP
         #  CCP().send_template_sms('手机号', ['验证码', '过期时间5分钟'], 短信模板1)
