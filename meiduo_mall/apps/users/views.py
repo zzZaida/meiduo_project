@@ -259,25 +259,39 @@ class EmailView(LoginRequiredMixin, View):
 # http://www.meiduo.site:8000/emails/verification/
 # ?token={
 # "user_id": 1, "email": "17638121602@163.com"}
+
+def check_verify_email_token(token):
+    # 解密
+    from utils.secret import SecretOauth
+    json_dict = SecretOauth().loads(token)
+    # 校验用户是否存在  同时邮箱也匹配
+    try:
+        user = User.objects.get(id=json_dict['user_id'], email=json_dict['email'])
+    except Exception as e:
+        logger.error(e)
+        return None
+    else:
+        return user
+
+
 class VerifyEmailView(LoginRequiredMixin, View):
 
     def get(self, request):
         # 1.接收参数
         json_str = request.GET.get('token')
 
-        # 解密
-        from utils.secret import SecretOauth
-        json_dict = SecretOauth().loads(json_str)
         # 校验用户是否存在  同时邮箱也匹配
-        try:
-            user = User.objects.get(id=json_dict['user_id'], email=json_dict['email'])
-        except Exception as e:
-            logger.error(e)
+        user = check_verify_email_token(json_str)
+        if not user:
             return http.HttpResponseForbidden('无效的token')
 
         # 2.修改对象的 email_active 字段
-        user.email_active = True
-        user.save()
+        try:
+            user.email_active = True
+            user.save()
+        except Exception as e:
+            logger.error(e)
+            return http.HttpResponseForbidden('激活邮箱失效了!')
 
         # 3.返回响应结果
         return redirect(reverse('users:info'))
