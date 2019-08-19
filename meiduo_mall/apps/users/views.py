@@ -1,5 +1,6 @@
 import json
 
+from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden
@@ -238,8 +239,13 @@ class EmailView(View):
             return http.JsonResponse({'code':RETCODE.DBERR, 'errmsg': '添加邮箱失败'})
 
         # 自动发邮件
+        token_value = {
+            'user_id': request.user.id,
+            'email': email
+        }
+        verify_url = settings.EMAIL_ACTIVE_URL + "?token=" + json.dumps(token_value)
         from celery_tasks.email.tasks import send_verify_email
-        send_verify_email.delay(email)
+        send_verify_email.delay(email, verify_url)
 
         # 4.返回前端结果
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '添加邮箱成功'})
