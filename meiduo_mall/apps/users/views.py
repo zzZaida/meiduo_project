@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden
@@ -214,4 +216,27 @@ class UserInfoView(LoginRequiredMixin, View):
         return render(request,'user_center_info.html', context)
 
 
+# 7 邮箱添加
+class EmailView(View):
+    def put(self,request):
+        # 1.接收 请求体非表单参数 json
+        json_bytes = request.body
+        json_str = json_bytes.decode()
+        json_dict = json.loads(json_str)
+        email = json_dict.get('email')
+
+        # 2.正则校验邮箱
+        if not re.match(r'^[a-z0-9][\w\.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$', email):
+            return http.HttpResponseForbidden('参数email有误')
+
+        # 3.修改 数据库中 email 值
+        try:
+            request.user.email = email
+            request.user.save()
+        except Exception as e:
+            logger.error(e)
+            return http.JsonResponse({'code':RETCODE.DBERR, 'errmsg': '添加邮箱失败'})
+
+        # 4.返回前端结果
+        return http.JsonResponse({'code':RETCODE.OK, 'errmsg': '添加邮箱成功'})
 
