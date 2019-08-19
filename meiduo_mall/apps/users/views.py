@@ -237,6 +237,10 @@ class EmailView(View):
             logger.error(e)
             return http.JsonResponse({'code':RETCODE.DBERR, 'errmsg': '添加邮箱失败'})
 
+        # 自动发邮件
+        from celery_tasks.email.tasks import send_verify_email
+        send_verify_email.delay(email)
+
         # 4.返回前端结果
-        return http.JsonResponse({'code':RETCODE.OK, 'errmsg': '添加邮箱成功'})
+        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '添加邮箱成功'})
 
