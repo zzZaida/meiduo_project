@@ -26,7 +26,9 @@ urlpatterns = [
     url(r'^', include('apps.contents.urls', namespace='contents')),
 
     # 3 验证码(image 短信)
-    url(r'^', include('apps.verifications.urls'))
+    url(r'^', include('apps.verifications.urls')),
 
+    # 4 QQ登录
+    url(r'^', include('apps.oauth.urls')),
 
 ]

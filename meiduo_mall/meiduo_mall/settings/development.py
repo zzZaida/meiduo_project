@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.contents',
     'apps.verifications',
+    'apps.oauth',
 ]
 
 MIDDLEWARE = [
