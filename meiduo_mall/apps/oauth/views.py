@@ -1,5 +1,7 @@
 from django import http
-from django.shortcuts import render
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import View
 
 # QQ_CLIENT_ID = '101518219'
@@ -9,7 +11,29 @@ from django.views import View
 
 from QQLoginTool.QQtool import OAuthQQ
 from django.conf import settings
+
+from apps.oauth.models import OAuthQQUser
 from utils.response_code import RETCODE
+
+
+# 4. 使用openid查询该QQ用户是否在美多商城中绑定过用户
+def is_bind_openid(openid, request):
+
+    try:
+        # 1 如果数据表中存在openid --- 绑定了
+        oauth_user = OAuthQQUser.objects.get(openid=openid)
+    except Exception as e:
+        # 2 数据表中不存在openid --- 没有绑定
+        print(openid)
+        return render(request, 'oauth_callback.html', context={'openid':openid})
+    else:
+        user = oauth_user.user
+        # 3 保持登录状态
+        login(request, user)
+        # 4 重定向到首页 设置首页用户名
+        response = redirect(reverse('contents:index'))
+        response.set_cookie('username', user.username, max_age=24*14*3600)
+        return response
 
 
 # 1 客户端与美多商城交互
@@ -47,5 +71,9 @@ class QQAuthUserView(View):
         # 3. token-->openid
         openid = oauth.get_open_id(token)
 
-        return http.HttpResponse(openid)
-    # EA3AB309F7F6384FE165C3234B061ECC
+        # 4. 是否绑定openid
+        response = is_bind_openid(openid, request)
+        return response
+
+        # return http.HttpResponse(openid)
+        # EA3AB309F7F6384FE165C3234B061ECC
