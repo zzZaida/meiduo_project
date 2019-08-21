@@ -30,4 +30,7 @@ urlpatterns = [
     # 8 验证邮箱接口设计和定义  /emails/verification/
     url(r'^emails/verification/$', views.VerifyEmailView.as_view()),
 
+    # 9 收货地址  address/
+    url(r'^address/$', views.AddressView.as_view()),
+
 ]

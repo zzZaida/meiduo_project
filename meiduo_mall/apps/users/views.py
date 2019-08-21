@@ -295,3 +295,9 @@ class VerifyEmailView(LoginRequiredMixin, View):
 
         # 3.返回响应结果
         return redirect(reverse('users:info'))
+
+
+# 9 收货地址
+class AddressView(View):
+    def get(self, request):
+        return render(request, 'user_center_site.html')
