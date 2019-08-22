@@ -31,4 +31,7 @@ urlpatterns = [
     # 4 QQ登录
     url(r'^', include('apps.oauth.urls')),
 
+    # 5 省市区
+    url(r'^', include('apps.areas.urls')),
+
 ]
