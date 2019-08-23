@@ -13,6 +13,7 @@ import re
 # from django.http import HttpResponseForbidden
 from django import http
 
+from apps.areas.models import Address
 from apps.users.models import User
 from apps.verifications import contants
 from meiduo_mall.settings.development import logger
@@ -22,12 +23,12 @@ from utils.response_code import RETCODE
 # 1 注册页面
 class RegisterView(View):
     # 1.注册页面显示
-    def get(self,request):
+    def get(self, request):
 
         return render(request, 'register.html')
 
     # 2.注册功能
-    def post(self,request):
+    def post(self, request):
         # <1> 接收解析参数
         username = request.POST.get('username')
         # username = request.POST('username')  ‘QueryDict’ object is not callable(调用)
@@ -89,18 +90,18 @@ class RegisterView(View):
         # from django.contrib.auth import login
         login(request, user)
 
-# redis-cli
-# 127.0.0.1:6379> keys *
-# 1) "django_redis_key"
-# 127.0.0.1:6379> select 1
-# OK
-# 127.0.0.1:6379[1]> keys *
-# 1) ":1:django.contrib.sessions.cachekd572q3dxu4g6oxagre9bcor1w5o8wxb"
-# 127.0.0.1:6379[1]> get :1:django.contrib.sessions.cachekd572q3dxu4g6oxagre9bcor1w5o8wxb
-# "\x80\x04\x95\x97\x00\x00\x00\x00\x00\x00\x00}\x94(\x8c\x0f_auth_user_hash\x94\x8c(63f00bc33873fb5c9317bc8366da5d8676531df8
-# \x94\x8c\r_auth_user_id\x94\x8c\x018\x94\x8c\x12_auth_user_backend\x94\x8c)django.contrib.auth.backends.ModelBackend\x94u."
+        # redis-cli
+        # 127.0.0.1:6379> keys *
+        # 1) "django_redis_key"
+        # 127.0.0.1:6379> select 1
+        # OK
+        # 127.0.0.1:6379[1]> keys *
+        # 1) ":1:django.contrib.sessions.cachekd572q3dxu4g6oxagre9bcor1w5o8wxb"
+        # 127.0.0.1:6379[1]> get :1:django.contrib.sessions.cachekd572q3dxu4g6oxagre9bcor1w5o8wxb
+        # "\x80\x04\x95\x97\x00\x00\x00\x00\x00\x00\x00}\x94(\x8c\x0f_auth_user_hash\x94\x8c(63f00bc33873fb5c9317bc8366da5d8676531df8
+        # \x94\x8c\r_auth_user_id\x94\x8c\x018\x94\x8c\x12_auth_user_backend\x94\x8c)django.contrib.auth.backends.ModelBackend\x94u."
 
-    # <5> 重定向到首页
+        # <5> 重定向到首页
         # return http.HttpResponse('重定向到首页')
         # 响应注册结果
         response = redirect(reverse('contents:index'))
@@ -136,8 +137,8 @@ class MobileCountView(View):
 
 # 4 登录
 class LoginView(View):
-    def get(self,request):
-        return render(request,'login.html')
+    def get(self, request):
+        return render(request, 'login.html')
 
     def post(self, request):
         # 1.接收三个参数
@@ -214,12 +215,12 @@ class UserInfoView(LoginRequiredMixin, View):
             'email': request.user.email,
             'email_active': request.user.email_active
         }
-        return render(request,'user_center_info.html', context)
+        return render(request, 'user_center_info.html', context)
 
 
 # 7 邮箱添加
 class EmailView(LoginRequiredMixin, View):
-    def put(self,request):
+    def put(self, request):
         # 1.接收 请求体非表单参数 json
         json_bytes = request.body
         json_str = json_bytes.decode()
@@ -236,7 +237,7 @@ class EmailView(LoginRequiredMixin, View):
             request.user.save()
         except Exception as e:
             logger.error(e)
-            return http.JsonResponse({'code':RETCODE.DBERR, 'errmsg': '添加邮箱失败'})
+            return http.JsonResponse({'code': RETCODE.DBERR, 'errmsg': '添加邮箱失败'})
 
         # 自动发邮件(需要加密)
         token_value = {
@@ -246,7 +247,7 @@ class EmailView(LoginRequiredMixin, View):
         # 加密 --->对象方法SecretOauth()
         from utils.secret import SecretOauth
         secret_str = SecretOauth().dumps(token_value)
-#http://www.meiduo.site:8000/emails/verification/?token={%22user_id%22:%201,%20%22email%22:%20%2217638121602@163.com%22}
+        # http://www.meiduo.site:8000/emails/verification/?token={%22user_id%22:%201,%20%22email%22:%20%2217638121602@163.com%22}
         verify_url = settings.EMAIL_ACTIVE_URL + "?token=" + secret_str
         from celery_tasks.email.tasks import send_verify_email
         send_verify_email.delay(email, verify_url)
@@ -275,7 +276,6 @@ def check_verify_email_token(token):
 
 
 class VerifyEmailView(LoginRequiredMixin, View):
-
     def get(self, request):
         # 1.接收参数
         json_str = request.GET.get('token')
@@ -298,6 +298,65 @@ class VerifyEmailView(LoginRequiredMixin, View):
 
 
 # 9 收货地址
-class AddressView(View):
+class AddressView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'user_center_site.html')
+
+
+# 10 增加收货地址
+class CreateAddressView(LoginRequiredMixin, View):
+    def post(self, request):
+        # 1.接收参数 JSON   dict(bytes-->string)
+        json_dict = json.loads(request.body.decode())
+
+        receiver = json_dict.get('receiver')
+        province_id = json_dict.get('province_id')
+        city_id = json_dict.get('city_id')
+        district_id = json_dict.get('district_id')
+        place = json_dict.get('place')
+        mobile = json_dict.get('mobile')
+        tel = json_dict.get('tel')
+        email = json_dict.get('email')
+
+        # 2.正则校验
+        if not all([receiver, province_id, city_id, district_id, place, mobile]):
+            return http.HttpResponseForbidden('缺少必传参数')
+        if not re.match(r'^1[3-9]\d{9}$', mobile):
+            return http.HttpResponseForbidden('参数mobile有误')
+        if tel:
+            if not re.match(r'^(0[0-9]{2,3}-)?([2-9][0-9]{6,7})+(-[0-9]{1,4})?$', tel):
+                return http.HttpResponseForbidden('参数tel有误')
+        if email:
+            if not re.match(r'^[a-z0-9][\w\.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$', email):
+                return http.HttpResponseForbidden('参数email有误')
+
+        # 3.create
+        address = Address.objects.create(
+            user=request.user,
+            title=receiver,
+            receiver=receiver,
+            province_id=province_id,
+            city_id=city_id,
+            district_id=district_id,
+            place=place,
+            mobile=mobile,
+            tel=tel,
+            email=email
+        )
+
+        # 4.构建前端  dict
+        address_dict = {
+            "id": address.id,
+            "title": address.title,
+            "receiver": address.receiver,
+            "province": address.province.name,
+            "city": address.city.name,
+            "district": address.district.name,
+            "place": address.place,
+            "mobile": address.mobile,
+            "tel": address.tel,
+            "email": address.email
+        }
+
+        # 5.返回  JsonResponse:  dict-->JSONstring
+        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '新增地址成功', 'address': address_dict})
