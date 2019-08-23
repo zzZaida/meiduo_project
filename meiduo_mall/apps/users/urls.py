@@ -39,4 +39,7 @@ urlpatterns = [
     # 11 修改默认地址  /addresses/(?P<address_id>\d+)/
     url(r'^addresses/(?P<address_id>\d+)/$', views.DefaultAddressView.as_view()),
 
+    # 12 地址标题的修改  /addresses/(?P<address_id>\d+)/title/
+    url(r'^/addresses/(?P<address_id>\d+)/title/$', views.UpdateTitleAddressView.as_view()),
+
 ]

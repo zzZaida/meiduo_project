@@ -426,3 +426,26 @@ class DefaultAddressView(LoginRequiredMixin, View):
 
         # 4.返回响应对象
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '设置默认地址成功'})
+
+
+# 12 设置地址标题
+class UpdateTitleAddressView(LoginRequiredMixin, View):
+    def put(self, request, address_id):
+        # 1.接收参数
+        json_dict = json.loads(request.body.decode())
+        title = json_dict.get('title')
+
+        try:
+            # 2.查询当前用户地址
+            address = Address.objects.get(id=address_id)
+
+            # 3.设置新的地址标题
+            address.title = title
+            address.save()
+
+        except Exception as e:
+            logger.error(e)
+            return http.JsonResponse({'code': RETCODE.DBERR, 'errmsg': '设置地址标题失败'})
+
+        # 4.返回响应对象
+        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '设置地址标题成功'})
