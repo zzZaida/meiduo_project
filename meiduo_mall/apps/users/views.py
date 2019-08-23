@@ -405,3 +405,24 @@ class CreateAddressView(LoginRequiredMixin, View):
 
         # 5.返回  JsonResponse:  dict-->JSONstring
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '新增地址成功', 'address': address_dict})
+
+
+# 11 默认地址
+class DefaultAddressView(LoginRequiredMixin, View):
+    def put(self, request, address_id):
+        # 1.接收参数
+
+        try:
+            # 2.查询当前地址
+            address = Address.objects.get(id=address_id)
+
+            # 3.修改user的 default_address
+            request.user.default_address = address
+            request.user.save()
+
+        except Exception as e:
+            logger.error(e)
+            return http.JsonResponse({'code': RETCODE.DBERR, 'errmsg': '设置默认地址失败'})
+
+        # 4.返回响应对象
+        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '设置默认地址成功'})
