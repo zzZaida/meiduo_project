@@ -42,7 +42,10 @@ urlpatterns = [
     # 12 地址标题的修改  /addresses/(?P<address_id>\d+)/title/
     url(r'^addresses/(?P<address_id>\d+)/title/$', views.UpdateTitleAddressView.as_view()),
 
-    # 13 修改地址  addresses/(?P<address_id>\d+)/
+    # 13 修改  删除地址  addresses/(?P<address_id>\d+)/
     url(r'^addresses/(?P<address_id>\d+)/$', views.UpdateDestroyAddressView.as_view()),
+
+    # 14 修改密码  password/
+    url(r'^password/$', views.ChangePasswordView.as_view()),
 
 ]

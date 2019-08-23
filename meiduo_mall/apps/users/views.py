@@ -1,8 +1,6 @@
 import json
-from asyncio import constants
-
 from django.conf import settings
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
@@ -336,7 +334,7 @@ class CreateAddressView(LoginRequiredMixin, View):
         # 判断是否超过地址上限：最多20个
         count = Address.objects.filter(user=request.user, is_deleted=False).count()
         # count = request.user.addresses.filter(is_deleted=False).count()
-        if count >= constants.USER_ADDRESS_COUNTS_LIMIT:
+        if count >= contants.USER_ADDRESS_COUNTS_LIMIT:
             return http.JsonResponse({'code': RETCODE.THROTTLINGERR, 'errmsg': '超过地址数量上限'})
 
         # 1.接收参数 JSON   dict(bytes-->string)
@@ -526,3 +524,47 @@ class UpdateDestroyAddressView(LoginRequiredMixin, View):
             return http.JsonResponse({'code': RETCODE.DBERR, 'errmsg': '删除地址失败'})
 
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '删除地址成功'})
+
+
+# 14 修改密码
+class ChangePasswordView(LoginRequiredMixin, View):
+    def get(self, request):
+        """展示修改密码界面"""
+        return render(request, 'user_center_pass.html')
+
+    def post(self, request):
+        """实现修改密码逻辑"""
+        # 接收参数
+        old_password = request.POST.get('old_pwd')
+        new_password = request.POST.get('new_pwd')
+        new_password2 = request.POST.get('new_cpwd')
+
+        # 校验参数
+        if not all([old_password, new_password, new_password2]):
+            return http.HttpResponseForbidden('缺少必传参数')
+
+        # 校验密码是否正确check_password
+        result = request.user.check_password(old_password)
+        # result 为false 密码不正确
+        if not result:
+            return render(request, 'user_center_pass.html', {'origin_pwd_errmsg': '原始密码错误'})
+        if not re.match(r'^[0-9A-Za-z]{8,20}$', new_password):
+            return http.HttpResponseForbidden('密码最少8位，最长20位')
+        if new_password != new_password2:
+            return http.HttpResponseForbidden('两次输入的密码不一致')
+
+        # 修改密码  --> 改完的密码需要加密set_password
+        try:
+            request.user.set_password(new_password)
+            request.user.save()
+        except Exception as e:
+            logger.error(e)
+            return render(request, 'user_center_pass.html', {'change_pwd_errmsg': '修改密码失败'})
+
+        # 清理状态保持信息
+        logout(request)
+        response = redirect(reverse('users:login'))
+        response.delete_cookie('username')
+
+        # # 响应密码修改结果：重定向到登录界面
+        return response
