@@ -451,7 +451,7 @@ class UpdateTitleAddressView(LoginRequiredMixin, View):
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '设置地址标题成功'})
 
 
-# 13 修改收货地址
+# 13 修改  删除收货地址
 class UpdateDestroyAddressView(LoginRequiredMixin, View):
     def put(self, request, address_id):
         # 1.接收参数
@@ -513,3 +513,16 @@ class UpdateDestroyAddressView(LoginRequiredMixin, View):
 
         # 响应更新地址结果
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '更新地址成功', 'address': address_dict})
+
+    def delete(self, request, address_id):
+        # 1.接收解析参数
+
+        # 2.修改 is_deleted=True
+        try:
+            Address.objects.get(id=address_id).update(is_deleted=True)
+
+        except Exception as e:
+            logger.error(e)
+            return http.JsonResponse({'code': RETCODE.DBERR, 'errmsg': '删除地址失败'})
+
+        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '删除地址成功'})
