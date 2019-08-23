@@ -34,11 +34,22 @@ class AreasView(View):
             return JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'province_list': province_list})
         else:
             # 3.市区的数据 area_id 有值
-            pass
-        # 4.将 ORM 的数据对象 转换成 给前端需要的 JSON 格式
+            # city_model_list = Area.objects.filter(parent_id=area_id)
+            parent_model = Area.objects.get(id=area_id)  # 查询市或区的父级
+            sub_model_list = parent_model.subs.all()
 
-        # 5.返回前端数据
-        return None
+            # 将 ORM 的数据对象 转换成 给前端需要的 JSON 格式
+            subs_list = []
+            for city in sub_model_list:
+                subs_list.append({'id': city.id, 'name': city.name})
+
+            sub_data = {
+                'id': parent_model.id,
+                'name': parent_model.name,
+                'subs': subs_list
+            }
+
+            return JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'sub_data': sub_data})
 
 
 
