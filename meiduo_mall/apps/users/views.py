@@ -339,24 +339,30 @@ class CreateAddressView(LoginRequiredMixin, View):
                 return http.HttpResponseForbidden('参数email有误')
 
         # 3.create
-        address = Address.objects.create(
-            user=request.user,
-            title=receiver,
-            receiver=receiver,
-            province_id=province_id,
-            city_id=city_id,
-            district_id=district_id,
-            place=place,
-            mobile=mobile,
-            tel=tel,
-            email=email
-        )
+        # 保存地址信息
+        try:
+            address = Address.objects.create(
+                user=request.user,
+                title=receiver,
+                receiver=receiver,
+                province_id=province_id,
+                city_id=city_id,
+                district_id=district_id,
+                place=place,
+                mobile=mobile,
+                tel=tel,
+                email=email
+            )
 
-        # 设置默认地址
-        default_address = request.user.default_address
-        if not default_address:
-            request.user.default_address = address
-            request.user.save()
+            # 设置默认地址
+            default_address = request.user.default_address
+            if not default_address:
+                request.user.default_address = address
+                request.user.save()
+
+        except Exception as e:
+            logger.error(e)
+            return http.JsonResponse({'code': RETCODE.DBERR, 'errmsg': '新增地址失败'})
 
         # 4.构建前端  dict
         address_dict = {
