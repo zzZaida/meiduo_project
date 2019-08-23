@@ -36,10 +36,13 @@ urlpatterns = [
     # 10 增加收货地址 /addresses/create/
     url(r'^addresses/create/$', views.CreateAddressView.as_view()),
 
-    # 11 修改默认地址  /addresses/(?P<address_id>\d+)/
-    url(r'^addresses/(?P<address_id>\d+)/$', views.DefaultAddressView.as_view()),
+    # 11 默认地址的修改  /addresses/(?P<address_id>\d+)/default/
+    url(r'^addresses/(?P<address_id>\d+)/default/$', views.DefaultAddressView.as_view()),
 
     # 12 地址标题的修改  /addresses/(?P<address_id>\d+)/title/
-    url(r'^/addresses/(?P<address_id>\d+)/title/$', views.UpdateTitleAddressView.as_view()),
+    url(r'^addresses/(?P<address_id>\d+)/title/$', views.UpdateTitleAddressView.as_view()),
+
+    # 13 修改地址  addresses/(?P<address_id>\d+)/
+    url(r'^addresses/(?P<address_id>\d+)/$', views.UpdateDestroyAddressView.as_view()),
 
 ]
