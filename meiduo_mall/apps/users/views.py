@@ -1,4 +1,5 @@
 import json
+from asyncio import constants
 
 from django.conf import settings
 from django.contrib.auth import login
@@ -306,6 +307,13 @@ class AddressView(LoginRequiredMixin, View):
 # 10 增加收货地址
 class CreateAddressView(LoginRequiredMixin, View):
     def post(self, request):
+
+        # 判断是否超过地址上限：最多20个
+        count = Address.objects.filter(user=request.user, is_deleted=False).count()
+        # count = request.user.addresses.filter(is_deleted=False).count()
+        if count >= constants.USER_ADDRESS_COUNTS_LIMIT:
+            return http.JsonResponse({'code': RETCODE.THROTTLINGERR, 'errmsg': '超过地址数量上限'})
+
         # 1.接收参数 JSON   dict(bytes-->string)
         json_dict = json.loads(request.body.decode())
 
@@ -343,6 +351,12 @@ class CreateAddressView(LoginRequiredMixin, View):
             tel=tel,
             email=email
         )
+
+        # 设置默认地址
+        default_address = request.user.default_address
+        if not default_address:
+            request.user.default_address = address
+            request.user.save()
 
         # 4.构建前端  dict
         address_dict = {
