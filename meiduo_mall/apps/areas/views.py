@@ -1,3 +1,4 @@
+
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
@@ -22,32 +23,46 @@ class AreasView(View):
         # 1.接收参数
         area_id = request.GET.get('area_id')
 
+        from django.core.cache import cache
         if not area_id:
-            # 2.省的数据 area_id 为空
-            province_model_list = Area.objects.filter(parent__isnull=True)
 
-            # 将 ORM 的数据对象 转换成 给前端需要的 JSON 格式
-            province_list = []
-            for pro in province_model_list:
-                province_list.append({'id': pro.id,'name': pro.name})
+            # 1 读取省份缓存数据
+            province_list = cache.get('province_list')
+
+            if not province_list:
+                # 2.省的数据 area_id 为空
+                province_model_list = Area.objects.filter(parent__isnull=True)
+
+                # 将 ORM 的数据对象 转换成 给前端需要的 JSON 格式
+                province_list = []
+                for pro in province_model_list:
+                    province_list.append({'id': pro.id,'name': pro.name})
+
+                # 存储省份缓存数据
+                cache.set('province_list', province_list, 3600)
 
             return JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'province_list': province_list})
         else:
             # 3.市区的数据 area_id 有值
-            # city_model_list = Area.objects.filter(parent_id=area_id)
-            parent_model = Area.objects.get(id=area_id)  # 查询市或区的父级
-            sub_model_list = parent_model.subs.all()
+            # 1 读取省份缓存数据
+            sub_data = cache.get('subs_%s' % area_id)
 
-            # 将 ORM 的数据对象 转换成 给前端需要的 JSON 格式
-            subs_list = []
-            for city in sub_model_list:
-                subs_list.append({'id': city.id, 'name': city.name})
+            if not sub_data:
+                # city_model_list = Area.objects.filter(parent_id=area_id)
+                parent_model = Area.objects.get(id=area_id)  # 查询市或区的父级
+                sub_model_list = parent_model.subs.all()
 
-            sub_data = {
-                'id': parent_model.id,
-                'name': parent_model.name,
-                'subs': subs_list
-            }
+                # 将 ORM 的数据对象 转换成 给前端需要的 JSON 格式
+                subs_list = []
+                for city in sub_model_list:
+                    subs_list.append({'id': city.id, 'name': city.name})
+
+                sub_data = {
+                    'id': parent_model.id,
+                    'name': parent_model.name,
+                    'subs': subs_list
+                }
+                cache.set('subs_%s' % area_id, sub_data, 3600)
 
             return JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'sub_data': sub_data})
 
