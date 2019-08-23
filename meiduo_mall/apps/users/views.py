@@ -298,10 +298,35 @@ class VerifyEmailView(LoginRequiredMixin, View):
         return redirect(reverse('users:info'))
 
 
-# 9 收货地址
+# 9 查询收货地址
 class AddressView(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'user_center_site.html')
+        # 1.查询当前用户的 所有地址
+        user = request.user
+        addresses = Address.objects.filter(user=user, is_deleted=False)
+
+        # 2.构建前端需要的数据格式
+        address_dict_list = []
+        for address in addresses:
+            address_dict = {
+                "id": address.id,
+                "title": address.title,
+                "receiver": address.receiver,
+                "province": address.province.name,
+                "city": address.city.name,
+                "district": address.district.name,
+                "place": address.place,
+                "mobile": address.mobile,
+                "tel": address.tel,
+                "email": address.email
+            }
+            address_dict_list.append(address_dict)
+
+        context = {
+            'default_address_id': user.default_address_id,
+            'addresses': address_dict_list,
+        }
+        return render(request, 'user_center_site.html', context)
 
 
 # 10 增加收货地址

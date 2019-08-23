@@ -4,7 +4,6 @@
     <list default="true" id="1b3b0539-63a3-4e20-aa27-07229fe1b5a0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/users/views.py" afterPath="$PROJECT_DIR$/apps/users/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/verifications/contants.py" afterPath="$PROJECT_DIR$/apps/verifications/contants.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/user_center_site.html" afterPath="$PROJECT_DIR$/templates/user_center_site.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -49,21 +48,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/users/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="670">
-              <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/users/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="579">
-              <caret line="358" column="30" lean-forward="false" selection-start-line="358" selection-start-column="30" selection-end-line="358" selection-end-column="30" />
+            <state relative-caret-position="197">
+              <caret line="300" column="10" lean-forward="true" selection-start-line="300" selection-start-column="10" selection-end-line="300" selection-end-column="10" />
               <folding>
                 <element signature="e#690#4138#0" expanded="false" />
                 <element signature="e#4187#4553#0" expanded="false" />
@@ -74,40 +63,18 @@
                 <element signature="e#7664#8961#0" expanded="false" />
                 <element signature="e#9145#9450#0" expanded="false" />
                 <element signature="e#9506#10044#0" expanded="false" />
-                <element signature="e#10102#10184#0" expanded="false" />
+                <element signature="e#11127#13916#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="contants.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/verifications/contants.py">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/users/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="30" lean-forward="false" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+            <state relative-caret-position="604">
+              <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/users/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/areas/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="609">
-              <caret line="43" column="28" lean-forward="false" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -189,12 +156,12 @@
         <option value="$PROJECT_DIR$/utils/fastdfs/fastdfs_storage.py" />
         <option value="$PROJECT_DIR$/meiduo_mall/settings/development.py" />
         <option value="$PROJECT_DIR$/apps/oauth/views.py" />
-        <option value="$PROJECT_DIR$/apps/areas/views.py" />
         <option value="$PROJECT_DIR$/utils/models.py" />
         <option value="$PROJECT_DIR$/apps/areas/models.py" />
         <option value="$PROJECT_DIR$/apps/users/models.py" />
         <option value="$PROJECT_DIR$/apps/users/urls.py" />
         <option value="$PROJECT_DIR$/apps/verifications/contants.py" />
+        <option value="$PROJECT_DIR$/apps/areas/views.py" />
         <option value="$PROJECT_DIR$/apps/users/views.py" />
       </list>
     </option>
@@ -276,25 +243,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="verifications" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meiduo_mall" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meiduo_mall" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="areas" />
+              <option name="myItemId" value="users" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -704,20 +653,6 @@
       <option name="presentableId" value="Default" />
       <updated>1565855446385</updated>
     </task>
-    <task id="LOCAL-00017" summary="08-- 判断用户名是否重复  前端实现&#10;     axios().then().catch()">
-      <created>1566045946127</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1566045946127</updated>
-    </task>
-    <task id="LOCAL-00018" summary="10-- 判断手机号是否重复  前端和后端&#10;     User.objects.filter(mobile=mobile).count()">
-      <created>1566047378804</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1566047378804</updated>
-    </task>
     <task id="LOCAL-00019" summary="11-- libs第三方包  captcha  yuntongxun">
       <created>1566048838623</created>
       <option name="number" value="00019" />
@@ -1047,7 +982,21 @@
       <option name="project" value="LOCAL" />
       <updated>1566556545615</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="8.收货地址的最大个数  20 &#10;  设置默认地址">
+      <created>1566562008248</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1566562008248</updated>
+    </task>
+    <task id="LOCAL-00067" summary="数据库交互----try  except Exception as e">
+      <created>1566562609319</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1566562609320</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1129,8 +1078,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="6. celery优化 和 拼接激活" />
-    <MESSAGE value="7. 激活邮箱&#10;   request.user.email_active = True&#10;   request.user.save()" />
     <MESSAGE value="9. 封装加密类 utils.secret.py--&gt; SecretOauth(object)" />
     <MESSAGE value="9. 使用加密类 对 token 进行加密 user.views.py--&gt; EmailView&#10;                          解密 user.views.py--&gt; VerifyEmailView" />
     <MESSAGE value="10. 封装了校验解析 token 的函数 check_verify_email_token(token)" />
@@ -1154,7 +1101,9 @@
     <MESSAGE value="5.数据缓存&#10;  from django.core.cache import cache&#10;  cache.set(k,v,seconds)&#10;  cache.get(k)&#10;" />
     <MESSAGE value="6.地址模型类 导入复制粘贴&#10;  User 新增字段 default_address&#10;  数据迁移&#10;" />
     <MESSAGE value="7.新增收货地址" />
-    <option name="LAST_COMMIT_MESSAGE" value="7.新增收货地址" />
+    <MESSAGE value="8.收货地址的最大个数  20 &#10;  设置默认地址" />
+    <MESSAGE value="数据库交互----try  except Exception as e" />
+    <option name="LAST_COMMIT_MESSAGE" value="数据库交互----try  except Exception as e" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1484,46 +1433,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/areas/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1298">
-          <caret line="60" column="42" lean-forward="true" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
-          <folding>
-            <element signature="e#1#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/users/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="670">
-          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/areas/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="43" column="28" lean-forward="false" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/users/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -1576,10 +1489,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/apps/users/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/areas/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="43" column="28" lean-forward="false" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/users/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="604">
+          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/areas/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+          <folding>
+            <element signature="e#1#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/apps/users/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="579">
-          <caret line="358" column="30" lean-forward="false" selection-start-line="358" selection-start-column="30" selection-end-line="358" selection-end-column="30" />
+        <state relative-caret-position="197">
+          <caret line="300" column="10" lean-forward="true" selection-start-line="300" selection-start-column="10" selection-end-line="300" selection-end-column="10" />
           <folding>
             <element signature="e#690#4138#0" expanded="false" />
             <element signature="e#4187#4553#0" expanded="false" />
@@ -1590,7 +1539,7 @@
             <element signature="e#7664#8961#0" expanded="false" />
             <element signature="e#9145#9450#0" expanded="false" />
             <element signature="e#9506#10044#0" expanded="false" />
-            <element signature="e#10102#10184#0" expanded="false" />
+            <element signature="e#11127#13916#0" expanded="false" />
           </folding>
         </state>
       </provider>
