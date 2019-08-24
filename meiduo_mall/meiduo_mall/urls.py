@@ -34,4 +34,7 @@ urlpatterns = [
     # 5 省市区
     url(r'^', include('apps.areas.urls')),
 
+    # 6 商品页
+    url(r'^', include('apps.goods.urls')),
+
 ]
