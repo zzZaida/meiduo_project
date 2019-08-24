@@ -37,4 +37,7 @@ urlpatterns = [
     # 6 商品页
     url(r'^', include('apps.goods.urls')),
 
+    # 7 搜索
+    url(r'^search/', include('haystack.urls')),
+
 ]
