@@ -7,6 +7,7 @@ from apps.contents.models import ContentCategory
 from apps.contents.utils import get_categories
 from apps.goods.models import SKU
 from apps.goods.utils import get_breadcrumb
+from apps.verifications import contants
 
 
 class ListView(View):
@@ -36,11 +37,24 @@ class ListView(View):
         print(skus)
 
         # 4.分页器--paginator
+        from django.core.paginator import Paginator
+        # 4.1 一页显示几个
+        paginator = Paginator(skus, contants.GOODS_LIST_LIMIT)
+        # 4.2 总页数
+        all_pages = paginator.num_pages
+        # 4.3 当前页 显示的内容
+        page_skus = paginator.page(page_num)
+
         # 5.热销商品
 
         context = {
-            'categories': categories,
-            'breadcrumb': bread_crumb
+            'categories': categories,  # 频道分类
+            'breadcrumb': bread_crumb,  # 面包屑导航
+            'sort': sort,  # 排序字段
+            'category': cat3,  # 第三级分类
+            'page_skus': page_skus,  # 分页后数据
+            'total_page': all_pages,  # 总页数
+            'page_num': page_num,  # 当前页码
         }
 
         return render(request, 'list.html', context)
