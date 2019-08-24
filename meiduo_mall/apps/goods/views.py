@@ -1,4 +1,9 @@
+from datetime import datetime
+
 from django import http
+from django.http import HttpResponseNotFound
+from django.http import HttpResponseServerError
+from django.http import JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -6,7 +11,7 @@ from django.views import View
 
 
 from apps.contents.utils import get_categories
-from apps.goods.models import SKU, GoodsCategory
+from apps.goods.models import SKU, GoodsCategory, GoodsVisitCount
 from apps.goods.utils import get_breadcrumb
 from apps.verifications import contants
 from utils.response_code import RETCODE
@@ -137,3 +142,38 @@ class DetailView(View):
             'specs': goods_specs,
         }
         return render(request, 'detail.html', context)
+
+
+class DetailVisitView(View):
+    """详情页分类商品访问量"""
+    def post(self, request, category_id):
+
+        # 1.校验 三级分类 是否存在
+        try:
+            category = GoodsCategory.objects.get(id=category_id)
+        except Exception as e:
+            return HttpResponseNotFound('缺少必传参数')
+
+        # 2.根据日期来判断 记录是否存在 2019-8-24
+        today_date_str = datetime.now().strftime('%Y-%m-%d')
+        # 将日期的字符串--> date数据格式
+        today_date = datetime.strptime(today_date_str,'%Y-%m-%d')
+
+        try:
+            visit = GoodsVisitCount.objects.get(category=category, date=today_date)
+            #           外键  -->  纯模型类小写_set
+            # visit = category.goodsvisitcount_set.get(date=today_date)
+        except Exception as e:
+            # 记录不存在  创建一条新纪录
+            visit = GoodsVisitCount()
+
+        # 3.count += 1
+        try:
+            visit.count += 1
+            visit.category = category
+            visit.save()
+        except Exception as e:
+            return HttpResponseServerError('新增失败')
+
+        # 4.返回响应对象
+        return JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK'})
