@@ -128,7 +128,7 @@
                 <ul>
 
                     <li v-for = "sku in hots">
-                        <a href="detail.html"><img v-bind:src="'http://image.meiduo.site:8888/' + sku.default_image_url"></a>
+                        <a href="detail.html"><img v-bind:src="sku.default_image_url"></a>
                         <h4><a href="#">[[ sku.name ]]</a></h4>
                         <div class="price">￥[[ sku.price ]]</div>
                     </li>
