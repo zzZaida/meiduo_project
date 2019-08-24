@@ -58,7 +58,7 @@
             <ul class="goods_type_list clearfix">
                 {% for result in page %}
                 <li>
-                    {# object取得才是sku对象 #}
+                    {# object取得才是sku对象  result.object == sku  #}
                     <a href="#"><img src="{{ result.object.default_image.url }}"></a>
                     <h4><a href="#">{{ result.object.name }}</a></h4>
                     <div class="operate">
@@ -100,6 +100,7 @@
                 callback:function (current) {
                     window.location.href = '/search/?q=iphone&amp;page=1';
                     window.location.href = '/search/?q={{ query }}&page=' + current;
+                  {#   www.meiduo.site:8000/search/?q=iphone&page=1  #}
                 }
             })
         });
