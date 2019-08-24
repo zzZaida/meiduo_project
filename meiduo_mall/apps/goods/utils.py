@@ -17,9 +17,9 @@ def get_breadcrumb(cat3):
 
     # 3 返回数据
     breadcrumb = {
-        'cat1':cat1,
-        'cat2':cat2,
-        'cat3':cat3,
+        'cat1': cat1,
+        'cat2': cat2,
+        'cat3': cat3,
 
     }
 
