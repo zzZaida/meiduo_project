@@ -161,8 +161,8 @@ class DetailVisitView(View):
 
         try:
             visit = GoodsVisitCount.objects.get(category=category, date=today_date)
-            #           外键  -->  纯模型类小写_set
-            # visit = category.goodsvisitcount_set.get(date=today_date)
+            #           外键  -->   纯模型类小写_set
+            visit = category.goodsvisitcount_set.get(date=today_date)
         except Exception as e:
             # 记录不存在  创建一条新纪录
             visit = GoodsVisitCount()

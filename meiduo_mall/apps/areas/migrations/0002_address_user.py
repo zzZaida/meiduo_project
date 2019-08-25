@@ -13,13 +13,13 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('oauth', '0001_initial'),
+        ('areas', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='oauthqquser',
+            model_name='address',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='用户'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='addresses', to=settings.AUTH_USER_MODEL, verbose_name='用户'),
         ),
     ]
