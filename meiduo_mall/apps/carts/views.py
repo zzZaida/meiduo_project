@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views import View
 
 from apps.goods.models import SKU
+from utils.response_code import RETCODE
 
 
 class CartsView(View):
@@ -45,4 +46,37 @@ class CartsView(View):
             print('登录 redis')
         else:
             # false-->未登录 cookie
-            print('未登录 cookie')
+
+            # 1 查询cookie购物车数据
+            cookie_str = request.COOKIES.get('carts')
+
+            # 2 判断有没有cookie
+            from utils.cookiesecret import CookieSecret
+            if cookie_str:
+                # 3 有--解密 cookie
+                cookie_dict = CookieSecret.loads(cookie_str)
+            else:
+                # 没有--新建一个
+                cookie_dict = {}
+
+            # ***判断商品是否 存在购物车里面
+            if sku_id in cookie_dict:
+                original_count = cookie_dict[sku_id]['count']
+                count += original_count
+
+            # 4 修改 count selected
+            cookie_dict[sku_id] = {
+                'count': count,
+                'selected': selected
+            }
+
+            # 5 加密 cookie
+            dumps_cookie_str = CookieSecret.dumps(cookie_dict)
+
+            # 6 设置增加cookie--> set_cookie()
+            response = http.JsonResponse({'code': RETCODE.OK, 'errmsg': '添加购物车成功'})
+            response.set_cookie('carts', dumps_cookie_str, max_age=15*24*3600)
+
+            # 7 返回响应对象
+            return response
+
