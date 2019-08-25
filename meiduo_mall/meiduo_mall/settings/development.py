@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'apps.oauth',
     'apps.areas',
     'apps.goods',
+    'apps.carts',
 
 
     # 注册第三方子应用

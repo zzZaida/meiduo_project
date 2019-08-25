@@ -40,4 +40,7 @@ urlpatterns = [
     # 7 搜索
     url(r'^search/', include('haystack.urls')),
 
+    # 8 购物车
+    url(r'^', include('apps.carts.urls')),
+
 ]
