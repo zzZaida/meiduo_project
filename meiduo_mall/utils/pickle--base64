@@ -1,0 +1,44 @@
+import json
+import pickle
+import base64
+dict_one = {
+    1: {"sku_id1": {"count": 2, "selected": True}}
+}
+
+
+# json   dict-->str
+json_str = json.dumps(dict_one)
+print(json_str)        # {"1": {"sku_id1": {"selected": true, "count": 2}}}
+print(type(json_str))  # <class 'str'>
+
+# json -->str-->dict
+json_dict = json.loads(json_str)
+print(json_dict)        # {'1': {'sku_id1': {'count': 2, 'selected': True}}}
+print(type(json_dict))  # <class 'dict'>
+
+
+# pickle  要求数据格式不发生任何改变  一般用于存储对象
+# pickle_bytes  dict --> bytes
+pickle_bytes = pickle.dumps(dict_one)
+print(pickle_bytes)
+# b'\x80\x03}q\x00K\x01}q\x01X\x07\x00\x00\x00sku_id1q\x02}q\x03(X\x08\x00\x00\x00selectedq\x04\x88X\x05\x00\x00\x00countq\x05K\x02uss.'
+
+# pickle_dict  bytes --> dict
+pickle_dict = pickle.loads(pickle_bytes)
+print(pickle_dict)
+# {1: {'sku_id1': {'count': 2, 'selected': True}}}
+
+
+# 加密 --64编码--对bytes进行加密
+base64_bytes = base64.b64encode(pickle_bytes)
+print(base64_bytes)
+# b'gAN9cQBLAX1xAVgHAAAAc2t1X2lkMXECfXEDKFgFAAAAY291bnRxBEsCWAgAAABzZWxlY3RlZHEFiHVzcy4='
+print(base64_bytes.decode())  # bytes--> str
+# gAN9cQBLAX1xAVgHAAAAc2t1X2lkMXECfXEDKFgFAAAAY291bnRxBEsCWAgAAABzZWxlY3RlZHEFiHVzcy4=
+
+# 解密  给前端字符串
+base64_decode_bytes = base64.b64decode(base64_bytes.decode())
+print(base64_decode_bytes)
+# b'\x80\x03}q\x00K\x01}q\x01X\x07\x00\x00\x00sku_id1q\x02}q\x03(X\x05\x00\x00\x00countq\x04K\x02X\x08\x00\x
+print(pickle.loads(base64_decode_bytes))
+# {1: {'sku_id1': {'selected': True, 'count': 2}}}
