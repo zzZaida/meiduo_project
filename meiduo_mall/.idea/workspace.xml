@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1b3b0539-63a3-4e20-aa27-07229fe1b5a0" name="Default" comment="">
+    <list default="true" id="1b3b0539-63a3-4e20-aa27-07229fe1b5a0" name="Default" comment="9.修改购物车数据 --- redis&#10;  redis_client = get_&#10;&#10;&#10;">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/carts/views.py" afterPath="$PROJECT_DIR$/apps/carts/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/user_center_site.html" afterPath="$PROJECT_DIR$/templates/user_center_site.html" />
@@ -72,12 +72,12 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/carts/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="469">
-              <caret line="219" column="13" lean-forward="true" selection-start-line="219" selection-start-column="13" selection-end-line="219" selection-end-column="13" />
+            <state relative-caret-position="447">
+              <caret line="220" column="17" lean-forward="true" selection-start-line="220" selection-start-column="17" selection-end-line="220" selection-end-column="17" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <element signature="e#3857#5880#0" expanded="false" />
-                <marker date="1566806197505" expanded="false" signature="349:3800" ph="..." />
+                <marker date="1566807056379" expanded="false" signature="349:3800" ph="..." />
               </folding>
             </state>
           </provider>
@@ -698,13 +698,6 @@
       <option name="presentableId" value="Default" />
       <updated>1565855446385</updated>
     </task>
-    <task id="LOCAL-00045" summary="10. 封装了校验解析 token 的函数 check_verify_email_token(token)">
-      <created>1566218813092</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1566218813094</updated>
-    </task>
     <task id="LOCAL-00046" summary="11. QQ登录&#10;    1.创建oauth子应用&#10;    2.创建了utils.models.py--文件模型类 BaseModel(创建时间和更新时间)&#10;    3.oauth.models.py--openid关联user字段">
       <created>1566220485001</created>
       <option name="number" value="00046" />
@@ -1041,7 +1034,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566804335434</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="8.修改购物车数据 --- cookie&#10;  取出来--解密---dict[key]=new_value--加密--set_cookie&#10;">
+      <created>1566806422293</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1566806422294</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1123,7 +1123,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="10. 设置默认地址" />
     <MESSAGE value="11.修改地址标题" />
     <MESSAGE value="12.修改收货地址&#10;   Address.objects.filter(id=address_id).update()" />
     <MESSAGE value="13.删除收货地址&#10;   Address.objects.get(id=address_id).update(is_deleted=True)" />
@@ -1148,7 +1147,8 @@
     <MESSAGE value="5.展示购物车&#10;  1.render 展示购物车页面&#10;  2.判断是否登录 user.is_authenticated&#10;  3.统一cookie redis 数据格式&#10;    通过 sku_ids 去SKU表查询商品数据&#10;    skus = SKU.objects.filter(id__in=sku_ids)&#10;    组合前端需要的数据格式" />
     <MESSAGE value="6.展示购物车--redis&#10;  1.链接数据库&#10;  2.hgetall&#10;  3.将字典中 bytes(key,value)--&gt;(int(key), dict(value))&#10;" />
     <MESSAGE value="7.展示购物车--cookie&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="7.展示购物车--cookie&#10;" />
+    <MESSAGE value="8.修改购物车数据 --- cookie&#10;  取出来--解密---dict[key]=new_value--加密--set_cookie&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="8.修改购物车数据 --- cookie&#10;  取出来--解密---dict[key]=new_value--加密--set_cookie&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1685,12 +1685,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/carts/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="219" column="13" lean-forward="true" selection-start-line="219" selection-start-column="13" selection-end-line="219" selection-end-column="13" />
+        <state relative-caret-position="447">
+          <caret line="220" column="17" lean-forward="true" selection-start-line="220" selection-start-column="17" selection-end-line="220" selection-end-column="17" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#3857#5880#0" expanded="false" />
-            <marker date="1566806197505" expanded="false" signature="349:3800" ph="..." />
+            <marker date="1566807056379" expanded="false" signature="349:3800" ph="..." />
           </folding>
         </state>
       </provider>

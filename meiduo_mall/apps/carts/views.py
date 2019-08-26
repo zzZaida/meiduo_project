@@ -203,7 +203,15 @@ class CartsView(View):
         user = request.user
         if user.is_authenticated:
             # redis
-            pass
+            # 1.链接数据库
+            redis_client = get_redis_connection('carts')
+
+            # 2.取出数据库所有的数据 (不需要)
+            # redis_carts = redis_client.hgetall(user.id)
+
+            # 3.修改
+            redis_client.hset(user.id, sku_id, json.dumps({'count': count, 'selected': selected}))
+
         else:
             # cookie
             cookie_str = request.COOKIES.get('carts')
