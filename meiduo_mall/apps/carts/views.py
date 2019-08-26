@@ -10,6 +10,50 @@ from utils.response_code import RETCODE
 from utils.cookiesecret import CookieSecret
 
 
+class CartsSelectAllView(View):
+    """全选购物车"""
+    def put(self, request):
+        # 1.接收参数
+        selected = json.loads(request.body.decode()).get('selected', True)
+
+        # 2.校验参数--判断selected是否有值
+        if selected:
+            if not isinstance(selected, bool):
+                return http.HttpResponseForbidden('参数selected有误')
+
+        # 3.判断是否登录
+        response = http.JsonResponse({'code': RETCODE.OK, 'errmsg': '全选购物车成功'})
+
+        user = request.user
+        if user.is_authenticated:
+            redis_client = get_redis_connection('carts')
+            redis_client_data = redis_client.hgetall(user.id)
+
+            # 遍历每一个商品 修改选中状态
+            for key, value in redis_client_data.items():
+                sku_id = int(key.decode())
+                cart_dict = json.loads(value.decode())
+
+                # 统一修改所有的选中状态
+                cart_dict['selected'] = selected
+                # 改完之后重新赋值
+                redis_client.hset(user.id, sku_id, json.dumps(cart_dict))
+
+        else:
+            cookie_str = request.COOKIES.get('carts')
+            if cookie_str is not None:
+                cart_dict = CookieSecret.loads(cookie_str)
+
+                for sku_id in cart_dict:
+                    cart_dict[sku_id]['selected'] = selected
+                # 加密
+                dumps_cookie_str = CookieSecret.dumps(cart_dict)
+                response.set_cookie('carts', dumps_cookie_str, max_age=24 * 15 * 3600)
+
+        # 4.返回响应对象
+        return response
+
+
 class CartsView(View):
     """购物车管理"""
 
@@ -284,3 +328,4 @@ class CartsView(View):
                 response.set_cookie('carts', dumps_cookie_str, max_age=24 * 15 * 3600)
 
         return response
+
