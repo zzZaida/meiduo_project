@@ -246,3 +246,41 @@ class CartsView(View):
         if not user.is_authenticated:
             response.set_cookie('carts', dumps_cookie_str, max_age=24 * 30 * 3600)
         return response
+
+    # 4.删除
+    def delete(self, request):
+        # 1.接收参数
+        sku_id = json.loads(request.body.decode()).get('sku_id')
+
+        # 2.校验参数
+        # 判断sku_id是否存在
+        try:
+            sku = SKU.objects.get(id=sku_id)
+        except SKU.DoesNotExist:
+            return http.HttpResponseForbidden('商品不存在')
+
+        # 3.判断是否登录
+        response = http.JsonResponse({'code': RETCODE.OK, 'errmsg': '删除购物车成功'})
+
+        user = request.user
+        if user.is_authenticated:
+            # redis
+            redis_client = get_redis_connection('carts')
+            redis_client.hdel(user.id, sku_id)
+        else:
+            # cookie
+            cookie_str = request.COOKIES.get('carts')
+            if cookie_str:
+                cart_dict = CookieSecret.loads(cookie_str)
+            else:
+                cart_dict = {}
+
+            # 判断sku_id是否在字典里,不在删除会挂
+            if sku_id in cart_dict:
+                del cart_dict[sku_id]
+                # 删完的字典重新加密转成string
+                dumps_cookie_str = CookieSecret.dumps(cart_dict)
+
+                response.set_cookie('carts', dumps_cookie_str, max_age=24 * 15 * 3600)
+
+        return response
