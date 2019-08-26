@@ -12,6 +12,7 @@ from utils.response_code import RETCODE
 class CartsView(View):
     """购物车管理"""
 
+    # 1.增加
     def post(self, request):
         """添加购物车"""
 
@@ -110,3 +111,43 @@ class CartsView(View):
 
             # 7 返回响应对象
             return response
+
+    # 2.查询--展示购物车
+    def get(self, request):
+
+        # 1.判断是否登录
+        user = request.user
+        if user.is_authenticated:
+            # 用户已登录, 查询redis购物车
+            pass
+        else:
+            # 用户未登录, 查询cookies购物车
+            pass
+
+        # 前端需要的列表字典 -- cookie redis传给前端的数据格式保持一致 -->
+        # cookie            {"sku_id":{"count":2, "selected":true}}
+        # redis  {"user_id":{"sku_id":{"count":2, "selected":true }}}
+
+        carts_dict = {"sku_id": {"count": 2, "selected": True}}
+        sku_ids = carts_dict.keys()  # sku_id
+
+        # 根据范围查询sku_id 获取所有的 sku(商品) 对象
+        skus = SKU.objects.filter(id__in=sku_ids)
+        cart_skus = []
+        for sku in skus:
+            cart_skus.append({
+                'id': sku.id,
+                'name': sku.name,
+                # dict.get(k, default=None)函数返回指定键的值  如果值不在字典中,返回默认值
+                'count': carts_dict.get(sku.id).get('count'),
+                'selected': str(carts_dict.get(sku.id).get('selected')),  # 将True，转'True'，方便json解析
+                'default_image_url': sku.default_image.url,
+                'price': str(sku.price),  # 从Decimal('10.2')中取出'10.2'，方便json解析
+                'amount': str(sku.price * carts_dict.get(sku.id).get('count')),  # 总价
+            })
+
+        context = {
+            'cart_skus': cart_skus,
+        }
+
+        return render(request, 'cart.html', context)
