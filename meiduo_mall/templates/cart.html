@@ -64,7 +64,7 @@
         <li class="col06">操作</li>
     </ul>
 
-    <ul class="cart_list_td clearfix" v-for="(cart,index) in carts">
+    <ul class="cart_list_td clearfix" v-for="(cart_sku,index) in carts">
         <li class="col01"><input type="checkbox" name="" v-model="cart_sku.selected" @change="update_selected(index)">
         </li>
         <li class="col02"><img :src="cart_sku.default_image_url"></li>

@@ -119,16 +119,31 @@ class CartsView(View):
         user = request.user
         if user.is_authenticated:
             # 用户已登录, 查询redis购物车
-            pass
+            # 1.链接数据库
+            redis_client = get_redis_connection('carts')
+
+            # 2.取出该用户所有购物车数据
+            redis_carts_dict = redis_client.hgetall(user.id)
+
+            # 3.字典推导式
+            # carts_dict = {}
+            # for key, value in redis_carts_dict.items():
+            #     sku_id = int(key.decode())
+            #     sku_value = json.loads(value.decode())
+            #     carts_dict[sku_id] = sku_value
+
+            carts_dict = {int(key.decode()): json.loads(value.decode()) for key, value in redis_carts_dict.items()}
+
+
         else:
             # 用户未登录, 查询cookies购物车
-            pass
+            carts_dict = {}
 
         # 前端需要的列表字典 -- cookie redis传给前端的数据格式保持一致 -->
         # cookie            {"sku_id":{"count":2, "selected":true}}
         # redis  {"user_id":{"sku_id":{"count":2, "selected":true }}}
 
-        carts_dict = {"sku_id": {"count": 2, "selected": True}}
+        # carts_dict = {"sku_id": {"count": 2, "selected": True}}
         sku_ids = carts_dict.keys()  # sku_id
 
         # 根据范围查询sku_id 获取所有的 sku(商品) 对象
