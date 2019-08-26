@@ -7,6 +7,7 @@ from django_redis import get_redis_connection
 
 from apps.goods.models import SKU
 from utils.response_code import RETCODE
+from utils.cookiesecret import CookieSecret
 
 
 class CartsView(View):
@@ -134,10 +135,13 @@ class CartsView(View):
 
             carts_dict = {int(key.decode()): json.loads(value.decode()) for key, value in redis_carts_dict.items()}
 
-
         else:
             # 用户未登录, 查询cookies购物车
-            carts_dict = {}
+            cookie_str = request.COOKIES.get('carts')
+            if cookie_str:
+                carts_dict = CookieSecret.loads(cookie_str)
+            else:
+                carts_dict = {}
 
         # 前端需要的列表字典 -- cookie redis传给前端的数据格式保持一致 -->
         # cookie            {"sku_id":{"count":2, "selected":true}}
