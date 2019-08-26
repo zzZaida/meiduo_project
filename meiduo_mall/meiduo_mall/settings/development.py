@@ -186,7 +186,7 @@ CACHES = {
         }
     },
     # carts 存储 5 号数据库
-    "carts": {
+    "carts": {  # 购物车--5号库
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/5",
         "OPTIONS": {

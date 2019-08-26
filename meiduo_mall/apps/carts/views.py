@@ -3,6 +3,7 @@ import json
 from django import http
 from django.shortcuts import render
 from django.views import View
+from django_redis import get_redis_connection
 
 from apps.goods.models import SKU
 from utils.response_code import RETCODE
@@ -43,17 +44,47 @@ class CartsView(View):
         user = request.user
         if user.is_authenticated:
             # true--> 登录 redis
-            print('登录 redis')
+            #  "user_id1":{"sku_id":{"count":"1","selected":"True"},
+
+            # 1 链接数据库 redis
+            redis_client = get_redis_connection('carts')
+
+            # 2 取出所有的数据--> 从redis取出的数据--bytes
+            # client_data = {b'3':b'{"count": 1,"selected": true}'}
+            client_data = redis_client.hgetall(user.id)
+
+            # 3 判断是否存在该用户是否有商品的记录数据
+            if not client_data:  #   k       v     json.dumps(dict-->string)
+                # 新增一条数据
+                redis_client.hset(user.id, sku_id, json.dumps({'count': count, 'selected': selected}))
+
+            # 4 判断当前添加的商品是否存在
+            # client_data = {b'3':b'{"count": 1,"selected": true}'}
+            if str(sku_id).encode() in client_data:
+                # 修改count      dict(bytes-->string)
+                sku_dict = json.loads(client_data[str(sku_id).encode()].decode())
+                # 累加 前端传入的个数
+                sku_dict["count"] += count
+                redis_client.hset(user.id, sku_id, json.dumps(sku_dict))
+
+            else:
+                # 商品不存在 新建一条数据(给hash的数据对象新增属性)
+                redis_client.hset(user.id, sku_id, json.dumps({'count': count, 'selected': selected}))
+
+            # 5 返回响应对象
+            return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '添加购物车成功'})
+
         else:
             # false-->未登录 cookie
+            # cookie_dict: {sku_id1: count, sku_id3: count, sku_id5: count, ...}
 
             # 1 查询cookie购物车数据
             cookie_str = request.COOKIES.get('carts')
 
-            # 2 判断有没有cookie
+            # 2 判断有没有
             from utils.cookiesecret import CookieSecret
             if cookie_str:
-                # 3 有--解密 cookie
+                # 3 有--解密
                 cookie_dict = CookieSecret.loads(cookie_str)
             else:
                 # 没有--新建一个
@@ -75,8 +106,7 @@ class CartsView(View):
 
             # 6 设置增加cookie--> set_cookie()
             response = http.JsonResponse({'code': RETCODE.OK, 'errmsg': '添加购物车成功'})
-            response.set_cookie('carts', dumps_cookie_str, max_age=15*24*3600)
+            response.set_cookie('carts', dumps_cookie_str, max_age=15 * 24 * 3600)
 
             # 7 返回响应对象
             return response
-
