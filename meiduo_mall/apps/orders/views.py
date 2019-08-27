@@ -94,71 +94,88 @@ class OrderCommitView(LoginRequiredMixin, View):
         if pay_method not in [OrderInfo.PAY_METHODS_ENUM['CASH'], OrderInfo.PAY_METHODS_ENUM['ALIPAY']]:
             return http.HttpResponseForbidden('参数pay_method错误')
 
-        # 3.生成订单号-->订单单表数据-->订单商品表
-        # 3.1 生成订单号:时间+用户id
-        user = request.user
-        order_id = datetime.now().strftime('%Y%m%d%H%M%S') + ('%09d' % user.id)
+        from django.db import transaction
+        # <1> 开启事务
+        with transaction.atomic():
+            # <2> 生成 保存点
+            save_id = transaction.savepoint()
 
-        # 3.2 订单表数据  第一张表OrderInfo
-        order = OrderInfo.objects.create(
-            order_id=order_id,
-            user=user,
-            address=address,
-            total_count=0,
-            total_amount=Decimal('0'),
-            freight=Decimal('10.00'),
-            pay_method=pay_method,
-            status=OrderInfo.ORDER_STATUS_ENUM['UNPAID'] if pay_method == OrderInfo.PAY_METHODS_ENUM['ALIPAY'] else
-            OrderInfo.ORDER_STATUS_ENUM['UNSEND']
-        )
+            # 3.生成订单号-->订单单表数据-->订单商品表
+            # 3.1 生成订单号:时间+用户id
+            user = request.user
+            order_id = datetime.now().strftime('%Y%m%d%H%M%S') + ('%09d' % user.id)
 
-        # 3.3 查询购物车redis--已选中的商品
-        redis_client = get_redis_connection('carts')
-        client_data = redis_client.hgetall(user.id)
+            try:
+                # 3.2 订单表数据  <第一张表>OrderInfo
+                order = OrderInfo.objects.create(
+                    order_id=order_id,
+                    user=user,
+                    address=address,
+                    total_count=0,
+                    total_amount=Decimal('0'),
+                    freight=Decimal('10.00'),
+                    pay_method=pay_method,
+                    status=OrderInfo.ORDER_STATUS_ENUM['UNPAID'] if pay_method == OrderInfo.PAY_METHODS_ENUM['ALIPAY'] else
+                    OrderInfo.ORDER_STATUS_ENUM['UNSEND']
+                )
 
-        # 筛选选中的商品
-        carts_dict = {}
-        for key, value in client_data.items():
-            sku_id = int(key.decode())
-            sku_dict = json.loads(value.decode())
+                # 3.3 查询购物车redis--已选中的商品
+                redis_client = get_redis_connection('carts')
+                client_data = redis_client.hgetall(user.id)
 
-            if sku_dict['selected']:
-                carts_dict[sku_id] = sku_dict
+                # 筛选选中的商品
+                carts_dict = {}
+                for key, value in client_data.items():
+                    sku_id = int(key.decode())
+                    sku_dict = json.loads(value.decode())
 
-        # 获取所有 选中商品 购买; 商品ids  两张表(SKU, SPU)
-        sku_ids = carts_dict.keys()
-        for sku_id in sku_ids:
-            sku = SKU.objects.get(id=sku_id)
+                    if sku_dict['selected']:
+                        carts_dict[sku_id] = sku_dict
 
-            # 如果 购买个数 大于 库存stock
-            cart_count = carts_dict[sku_id]['count']
-            if cart_count > sku.stock:
-                return http.JsonResponse({'code': RETCODE.STOCKERR, 'errmsg': '库存不足'})
+                # 获取所有 选中商品 购买; 商品ids  <两张表>(SKU, SPU)
+                sku_ids = carts_dict.keys()
+                for sku_id in sku_ids:
+                    sku = SKU.objects.get(id=sku_id)
 
-            # 4.SKU 销量增加 库存减少
-            sku.stock -= cart_count
-            sku.sales += cart_count
-            sku.save()
+                    # 如果 购买个数 大于 库存stock
+                    cart_count = carts_dict[sku_id]['count']
+                    if cart_count > sku.stock:
+                        # <3> 事务回滚
+                        transaction.savepoint_rollback(save_id)
+                        return http.JsonResponse({'code': RETCODE.STOCKERR, 'errmsg': '库存不足'})
 
-            # 5.SPU 销量增加
-            sku.spu.sales += cart_count
-            sku.spu.save()
+                    # 4.SKU 销量增加 库存减少
+                    sku.stock -= cart_count
+                    sku.sales += cart_count
+                    sku.save()
 
-            # 保存订单商品表的数据  第4张表 OrderGoods
-            OrderGoods.objects.create(
-                order=order,
-                sku=sku,
-                count=cart_count,
-                price=sku.price,
-            )
+                    # 5.SPU 销量增加
+                    sku.spu.sales += cart_count
+                    sku.spu.save()
 
-            # 重新计算 购买的总个数  总金额  运费
-            order.total_count += cart_count
-            order.total_amount += sku.price * cart_count
+                    # 保存订单商品表的数据  <第4张表> OrderGoods
+                    OrderGoods.objects.create(
+                        order=order,
+                        sku=sku,
+                        count=cart_count,
+                        price=sku.price,
+                    )
 
-        # 总支付金额 需要加上运费
-        order.total_amount += order.freight
-        order.save()
+                    # 重新计算 购买的总个数  总金额  运费
+                    order.total_count += cart_count
+                    order.total_amount += sku.price * cart_count
+
+                # 总支付金额 需要加上运费
+                order.total_amount += order.freight
+                order.save()
+
+            except Exception as e:
+                # <5> 暴力回滚--三张表不管哪个有问题都回滚
+                transaction.savepoint_rollback(save_id)
+                return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '下单失败'})
+
+            # <4> 事务提交
+            transaction.savepoint_commit(save_id)
 
         # 6.清空购物车所有数据(已经购买的数据 以前选中的数据)
         redis_client.hdel(user.id, *carts_dict)

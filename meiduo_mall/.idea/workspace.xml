@@ -4,7 +4,6 @@
     <list default="true" id="1b3b0539-63a3-4e20-aa27-07229fe1b5a0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/orders/views.py" afterPath="$PROJECT_DIR$/apps/orders/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/cart.html" afterPath="$PROJECT_DIR$/templates/cart.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/user_center_site.html" afterPath="$PROJECT_DIR$/templates/user_center_site.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,11 +72,12 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/orders/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="101" column="34" lean-forward="true" selection-start-line="101" selection-start-column="34" selection-end-line="101" selection-end-column="34" />
+            <state relative-caret-position="430">
+              <caret line="130" column="0" lean-forward="true" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <element signature="e#538#2093#0" expanded="false" />
+                <element signature="e#4463#5550#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -264,8 +264,8 @@
         <option value="$PROJECT_DIR$/apps/orders/models.py" />
         <option value="$PROJECT_DIR$/apps/orders/urls.py" />
         <option value="$PROJECT_DIR$/apps/orders/123.py" />
-        <option value="$PROJECT_DIR$/apps/orders/views.py" />
         <option value="$PROJECT_DIR$/templates/cart.html" />
+        <option value="$PROJECT_DIR$/apps/orders/views.py" />
       </list>
     </option>
   </component>
@@ -770,13 +770,6 @@
       <option name="presentableId" value="Default" />
       <updated>1565855446385</updated>
     </task>
-    <task id="LOCAL-00054" summary="2. 写脚本 和 fastdfs 上传图片演示&#10;   1 创建脚本文件 .sh .py&#10;   2 指定解释器 #！&#10;   3 chmod +x run.sh&#10;   4 ./xx.sh">
-      <created>1566459459725</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1566459459725</updated>
-    </task>
     <task id="LOCAL-00055" summary="定义首页广告模型类 apps/contents/models.py&#10;定义商品信息模型类(创建goods应用--models.py)">
       <created>1566470845825</created>
       <option name="number" value="00055" />
@@ -1113,7 +1106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566895411542</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="5.保存订单基本信息和订单商品信息">
+      <created>1566907457640</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1566907457640</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1195,7 +1195,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="5.判断 sort 的参数值 返回对象的 排序字段&#10;  根据排序字段 返回所有 skus数据" />
     <MESSAGE value="6.使用分页器 分页 列表数据&#10;  1.导包 from django.core.paginator import Paginator&#10;  2.每页显示的内容 Paginator(skus, 5)&#10;  3.总页数 all_pages = paginator.num_pages&#10;  4.显示当前页的内容 paginator.page(page_num)" />
     <MESSAGE value="6.分页数据  前端渲染" />
     <MESSAGE value="7.热销排行&#10;  SKU.objects.filter(category=category_id, is_launched=True).order_by('-sales')&#10;  hot_skus[:2]" />
@@ -1220,7 +1219,8 @@
     <MESSAGE value="&lt;第9天&gt; 1.创建子应用orders---结算订单页面显示" />
     <MESSAGE value="2.结算订单 数据显示&#10;  1.地址&#10;  2.购物车 redis 的筛选--selected==True--skus&#10;    计算总个数和总金额--动态添加 count amount 属性  运费freight&#10;  3.构建前端需要的数据格式(结算金额)&#10;" />
     <MESSAGE value="3.创建订单数据库表--orders/models.py--数据迁移&#10;4.提交订单--接收参数 address_id,pay_method;&#10;  校验-- 地址  支付方式&#10;  订单号--添加订单数据(缺少  总个数 和 总金额)&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="3.创建订单数据库表--orders/models.py--数据迁移&#10;4.提交订单--接收参数 address_id,pay_method;&#10;  校验-- 地址  支付方式&#10;  订单号--添加订单数据(缺少  总个数 和 总金额)&#10;" />
+    <MESSAGE value="5.保存订单基本信息和订单商品信息" />
+    <option name="LAST_COMMIT_MESSAGE" value="5.保存订单基本信息和订单商品信息" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1395,19 +1395,6 @@
           <folding>
             <element signature="e#0#35#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbDummy://dbtable:/33bcf16e/ed8365ca-ecb1-4b8c-bf63-8647aeb0007d/meiduo.tb_areas">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1662,16 +1649,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/orders/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="34" column="12" lean-forward="true" selection-start-line="34" selection-start-column="12" selection-end-line="34" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/orders/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
@@ -1688,7 +1665,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbDummy://dbtable:/33bcf16e/ed8365ca-ecb1-4b8c-bf63-8647aeb0007d/meiduo.tb_order_info">
+    <entry file="dbDummy://dbtable:/33bcf16e/ed8365ca-ecb1-4b8c-bf63-8647aeb0007d/meiduo.tb_areas">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
@@ -1701,20 +1678,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbDummy://dbtable:/33bcf16e/ed8365ca-ecb1-4b8c-bf63-8647aeb0007d/meiduo.tb_spu">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+    <entry file="file://$PROJECT_DIR$/apps/orders/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="34" column="12" lean-forward="true" selection-start-line="34" selection-start-column="12" selection-end-line="34" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="dbDummy://dbtable:/33bcf16e/ed8365ca-ecb1-4b8c-bf63-8647aeb0007d/meiduo.tb_sku">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/33bcf16e/ed8365ca-ecb1-4b8c-bf63-8647aeb0007d/meiduo.tb_order_info">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
@@ -1740,13 +1727,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="dbDummy://dbtable:/33bcf16e/ed8365ca-ecb1-4b8c-bf63-8647aeb0007d/meiduo.tb_spu">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/apps/orders/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="101" column="34" lean-forward="true" selection-start-line="101" selection-start-column="34" selection-end-line="101" selection-end-column="34" />
+        <state relative-caret-position="430">
+          <caret line="130" column="0" lean-forward="true" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#538#2093#0" expanded="false" />
+            <element signature="e#4463#5550#0" expanded="false" />
           </folding>
         </state>
       </provider>
