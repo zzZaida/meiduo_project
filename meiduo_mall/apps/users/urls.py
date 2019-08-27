@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^emails/verification/$', views.VerifyEmailView.as_view()),
 
     # 9 收货地址  address/
-    url(r'^address/$', views.AddressView.as_view()),
+    url(r'^address/$', views.AddressView.as_view(), name='address'),
 
     # 10 增加收货地址 /addresses/create/
     url(r'^addresses/create/$', views.CreateAddressView.as_view()),
