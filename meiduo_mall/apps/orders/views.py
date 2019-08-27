@@ -153,40 +153,58 @@ class OrderCommitView(LoginRequiredMixin, View):
                 # 获取所有 选中商品 购买; 商品ids  <两张表>(SKU, SPU)
                 sku_ids = carts_dict.keys()
                 for sku_id in sku_ids:
-                    sku = SKU.objects.get(id=sku_id)
+                    while True:
+                        sku = SKU.objects.get(id=sku_id)
+                        # 老库存
+                        old_stock = sku.stock
+                        old_sales = sku.sales
 
-                    # 如果 购买个数 大于 库存stock
-                    cart_count = carts_dict[sku_id]['count']
-                    if cart_count > sku.stock:
-                        # <3> 事务回滚
-                        transaction.savepoint_rollback(save_id)
-                        return http.JsonResponse({'code': RETCODE.STOCKERR, 'errmsg': '库存不足'})
+                        # 如果 购买个数 大于 库存stock
+                        cart_count = carts_dict[sku_id]['count']
+                        if cart_count > sku.stock:
+                            # <3> 事务回滚
+                            transaction.savepoint_rollback(save_id)
+                            return http.JsonResponse({'code': RETCODE.STOCKERR, 'errmsg': '库存不足'})
 
-                    # 延时--演示资源竞争
-                    # (7号库存只有5个,但是显示两个人(3台 共6台)都成功了--赔钱)
-                    # 但tb_sku中显示 5  0 -->2  3
-                    time.sleep(10)
+                        # 延时--演示资源竞争
+                        # (7号库存只有5个,但是显示两个人(3台 共6台)都成功了--赔钱)
+                        # 但tb_sku中显示 5  0 -->2  3
+                        time.sleep(10)
 
-                    # 4.SKU 销量增加 库存减少
-                    sku.stock -= cart_count
-                    sku.sales += cart_count
-                    sku.save()
+                        # 4.SKU 销量增加 库存减少
+                        # sku.stock -= cart_count
+                        # sku.sales += cart_count
+                        # sku.save()
 
-                    # 5.SPU 销量增加
-                    sku.spu.sales += cart_count
-                    sku.spu.save()
+                        # 新库存=老库存-购物车数量
+                        new_stock = old_stock - cart_count
+                        new_sales = old_sales + cart_count
+                        # 使用乐观锁 执行更新(在每次操作数据库之前 先再次查询原始的库存是否改变,如果有改变就更新失败)
+                        # 若更新失败--但库存仍然满足 则循环执行更新直到--库存不足或者购买成功 result返回 0或1
+                        result = SKU.objects.filter(id=sku_id, stock=old_stock).update(stock=new_stock, sales=new_sales)
 
-                    # 保存订单商品表的数据  <第4张表> OrderGoods
-                    OrderGoods.objects.create(
-                        order=order,
-                        sku=sku,
-                        count=cart_count,
-                        price=sku.price,
-                    )
+                        # 下单失败--直到 是因为库存不足或者购买成功的原因才退出循环
+                        if result == 0:
+                            continue
 
-                    # 重新计算 购买的总个数  总金额  运费
-                    order.total_count += cart_count
-                    order.total_amount += sku.price * cart_count
+                        # 5.SPU 销量增加
+                        sku.spu.sales += cart_count
+                        sku.spu.save()
+
+                        # 保存订单商品表的数据  <第4张表> OrderGoods
+                        OrderGoods.objects.create(
+                            order=order,
+                            sku=sku,
+                            count=cart_count,
+                            price=sku.price,
+                        )
+
+                        # 重新计算 购买的总个数  总金额  运费
+                        order.total_count += cart_count
+                        order.total_amount += sku.price * cart_count
+
+                        # 购买成功 退出循环购买
+                        break
 
                 # 总支付金额 需要加上运费
                 order.total_amount += order.freight
