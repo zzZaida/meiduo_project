@@ -15,6 +15,7 @@ from QQLoginTool.QQtool import OAuthQQ
 from django.conf import settings
 from django_redis import get_redis_connection
 
+from apps.carts.utils import merge_cart_cookie_to_redis
 from apps.oauth.models import OAuthQQUser
 from apps.users.models import User
 from utils.response_code import RETCODE
@@ -140,6 +141,13 @@ class QQAuthUserView(View):
         login(request, user)
         # 重定向到首页 设置首页用户名
         response = redirect(reverse('contents:index'))
+
+        # 购物车合并
+        # cookie--未登录--笔记本3  黄色2  黑色1  银色1
+        # redis----登录---笔记本3  黄色2  黑色1
+        # 合并结果---           4     4     4     1
+        response = merge_cart_cookie_to_redis(request, user, response)
+
         response.set_cookie('username', user.username, max_age=24 * 14 * 3600)
         return response
 

@@ -1,4 +1,5 @@
 import json
+import re
 from django.conf import settings
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,13 +7,14 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
-import re
+
 
 # 点完注册  DeBUG 有反应 到后台页面 ---> 前端问题
 # from django.http import HttpResponseForbidden
 from django import http
 
 from apps.areas.models import Address
+from apps.carts.utils import merge_cart_cookie_to_redis
 from apps.users.models import User
 from apps.verifications import contants
 from meiduo_mall.settings.development import logger
@@ -182,6 +184,12 @@ class LoginView(View):
             response = redirect(next)
         else:
             response = redirect(reverse('contents:index'))
+
+        # 购物车合并
+        # cookie--未登录--笔记本1  黄色2  黑色3  银色1
+        # redis----登录---笔记本3  黄色2  黑色1
+        # 合并结果---           1     2     3     1
+        response = merge_cart_cookie_to_redis(request, user, response)
 
         # 注册时用户名写入到cookie,有效期15天
         response.set_cookie('username', user.username, max_age=contants.SET_COOKIE_EXPIRE)
