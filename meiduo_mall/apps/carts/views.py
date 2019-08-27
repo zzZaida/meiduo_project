@@ -10,6 +10,41 @@ from utils.response_code import RETCODE
 from utils.cookiesecret import CookieSecret
 
 
+class CartsSimpleView(View):
+    """商品页面右上角购物车"""
+    def get(self, request):
+        user = request.user
+        if user.is_authenticated:
+            # redis
+            redis_client = get_redis_connection('carts')
+            carts_data = redis_client.hgetall(user.id)
+
+            cart_dict = {int(data[0].decode()): json.loads(data[1].decode()) for data in carts_data.items()}
+
+        else:
+            # cookie
+            cookie_str = request.COOKIES.get('carts')
+            if cookie_str:
+                cart_dict = CookieSecret.loads(cookie_str)
+            else:
+                cart_dict = {}
+
+        # 构造简单购物车JSON数据
+        cart_skus = []
+        sku_ids = cart_dict.keys()
+        skus = SKU.objects.filter(id__in=sku_ids)
+        for sku in skus:
+            cart_skus.append({
+                'id': sku.id,
+                'name': sku.name,
+                'count': cart_dict.get(sku.id).get('count'),
+                'default_image_url': sku.default_image.url
+            })
+
+        # 响应json列表数据
+        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'cart_skus': cart_skus})
+
+
 class CartsSelectAllView(View):
     """全选购物车"""
     def put(self, request):

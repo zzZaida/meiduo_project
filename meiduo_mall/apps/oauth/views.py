@@ -22,9 +22,6 @@ from utils.response_code import RETCODE
 
 
 # 4. 使用openid查询该QQ用户是否在美多商城中绑定过用户
-from utils.secret import SecretOauth
-
-
 def is_bind_openid(openid, request):
 
     try:
@@ -107,17 +104,17 @@ class QQAuthUserView(View):
         # 判断密码是否合格
         if not re.match(r'^[0-9A-Za-z]{8,20}$', pwd):
             return http.HttpResponseForbidden('请输入8-20位的密码')
-        # 判断短信验证码是否一致
-        redis_conn = get_redis_connection('verify_code')
-        sms_code_server = redis_conn.get('sms_%s' % mobile)
-        if sms_code_server is None:
-            return render(request, 'oauth_callback.html', {'sms_code_errmsg': '无效的短信验证码'})
-        if sms_code_client != sms_code_server.decode():
-            return render(request, 'oauth_callback.html', {'sms_code_errmsg': '输入短信验证码有误'})
-        # 解密出openid 再判断openid是否有效
-        openid = SecretOauth().loads(openid).get('openid')
-        if not openid:
-            return render(request, 'oauth_callback.html', {'openid_errmsg': '无效的openid'})
+        # # 判断短信验证码是否一致
+        # redis_conn = get_redis_connection('sms_code')
+        # sms_code_server = redis_conn.get('sms_%s' % mobile)
+        # if sms_code_server is None:
+        #     return render(request, 'oauth_callback.html', {'sms_code_errmsg': '无效的短信验证码'})
+        # if sms_code_client != sms_code_server.decode():
+        #     return render(request, 'oauth_callback.html', {'sms_code_errmsg': '输入短信验证码有误'})
+        # # 解密出openid 再判断openid是否有效
+        # openid = SecretOauth().loads(openid).get('openid')
+        # if not openid:
+        #     return render(request, 'oauth_callback.html', {'openid_errmsg': '无效的openid'})
 
         # 3.判断user是否存在
         try:
@@ -143,9 +140,9 @@ class QQAuthUserView(View):
         response = redirect(reverse('contents:index'))
 
         # 购物车合并
-        # cookie--未登录--笔记本3  黄色2  黑色1  银色1
+        # cookie--未登录--笔记本1  黄色2  黑色3  银色1
         # redis----登录---笔记本3  黄色2  黑色1
-        # 合并结果---           4     4     4     1
+        # 合并结果---           1     2     3     1
         response = merge_cart_cookie_to_redis(request, user, response)
 
         response.set_cookie('username', user.username, max_age=24 * 14 * 3600)
