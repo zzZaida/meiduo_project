@@ -15,6 +15,25 @@ from apps.orders.models import OrderInfo, OrderGoods
 from utils.response_code import RETCODE
 
 
+class OrderSuccessView(LoginRequiredMixin, View):
+    """提交订单成功"""
+    def get(self, request):
+        # 1.接收查询参数
+        # http://www.meiduo.site:8000/orders/success/
+        # ?order_id=20190827124712000000001&payment_amount=3398&pay_method=2
+        order_id = request.GET.get('order_id')
+        payment_amount = request.GET.get('payment_amount')
+        pay_method = request.GET.get('pay_method')
+
+        # 2.返回前端
+        context = {
+            'order_id': order_id,
+            'payment_amount': payment_amount,
+            'pay_method': pay_method
+        }
+        return render(request, 'order_success.html', context)
+
+
 class OrderSettlementView(LoginRequiredMixin, View):
     """结算订单"""
     def get(self, request):
@@ -74,7 +93,6 @@ class OrderSettlementView(LoginRequiredMixin, View):
 
 class OrderCommitView(LoginRequiredMixin, View):
     """订单提交"""
-
     def post(self, request):
         """保存订单信息和订单商品信息"""
 

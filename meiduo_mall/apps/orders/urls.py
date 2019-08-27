@@ -10,6 +10,9 @@ urlpatterns = [
     url(r'^orders/settlement/$', views.OrderSettlementView.as_view(), name='settlement'),
 
     # 2.提交订单  orders/commit/
-    url(r'^orders/commit/$', views.OrderCommitView.as_view(), name='commit')
+    url(r'^orders/commit/$', views.OrderCommitView.as_view(), name='commit'),
+
+    # 3.展示提交成功页面 orders/success/
+    url(r'^orders/success/$', views.OrderSuccessView.as_view()),
 
 ]
