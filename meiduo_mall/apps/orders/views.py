@@ -11,7 +11,8 @@ from django_redis import get_redis_connection
 
 from apps.areas.models import Address
 from apps.goods.models import SKU
-from apps.orders.models import OrderInfo
+from apps.orders.models import OrderInfo, OrderGoods
+from utils.response_code import RETCODE
 
 
 class OrderSettlementView(LoginRequiredMixin, View):
@@ -98,7 +99,7 @@ class OrderCommitView(LoginRequiredMixin, View):
         user = request.user
         order_id = datetime.now().strftime('%Y%m%d%H%M%S') + ('%09d' % user.id)
 
-        # 3.2 订单表数据
+        # 3.2 订单表数据  第一张表OrderInfo
         order = OrderInfo.objects.create(
             order_id=order_id,
             user=user,
@@ -110,14 +111,57 @@ class OrderCommitView(LoginRequiredMixin, View):
             status=OrderInfo.ORDER_STATUS_ENUM['UNPAID'] if pay_method == OrderInfo.PAY_METHODS_ENUM['ALIPAY'] else
             OrderInfo.ORDER_STATUS_ENUM['UNSEND']
         )
-        # 如果 购买个数 大于 库存stock
 
-        # 4.SKU 销量增加 库存减少
+        # 3.3 查询购物车redis--已选中的商品
+        redis_client = get_redis_connection('carts')
+        client_data = redis_client.hgetall(user.id)
 
-        # 5.SPU 销量增加
+        # 筛选选中的商品
+        carts_dict = {}
+        for key, value in client_data.items():
+            sku_id = int(key.decode())
+            sku_dict = json.loads(value.decode())
 
-        # 重新计算 购买的总个数  总金额  运费
+            if sku_dict['selected']:
+                carts_dict[sku_id] = sku_dict
 
-        # 6.清空购物车  已经购买的数据 以前选中的数据
+        # 获取所有 选中商品 购买; 商品ids  两张表(SKU, SPU)
+        sku_ids = carts_dict.keys()
+        for sku_id in sku_ids:
+            sku = SKU.objects.get(id=sku_id)
+
+            # 如果 购买个数 大于 库存stock
+            cart_count = carts_dict[sku_id]['count']
+            if cart_count > sku.stock:
+                return http.JsonResponse({'code': RETCODE.STOCKERR, 'errmsg': '库存不足'})
+
+            # 4.SKU 销量增加 库存减少
+            sku.stock -= cart_count
+            sku.sales += cart_count
+            sku.save()
+
+            # 5.SPU 销量增加
+            sku.spu.sales += cart_count
+            sku.spu.save()
+
+            # 保存订单商品表的数据  第4张表 OrderGoods
+            OrderGoods.objects.create(
+                order=order,
+                sku=sku,
+                count=cart_count,
+                price=sku.price,
+            )
+
+            # 重新计算 购买的总个数  总金额  运费
+            order.total_count += cart_count
+            order.total_amount += sku.price * cart_count
+
+        # 总支付金额 需要加上运费
+        order.total_amount += order.freight
+        order.save()
+
+        # 6.清空购物车所有数据(已经购买的数据 以前选中的数据)
+        redis_client.hdel(user.id, *carts_dict)
 
         # 7.返回响应对象
+        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': '下单成功', 'order_id': order.order_id})
