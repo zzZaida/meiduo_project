@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1b3b0539-63a3-4e20-aa27-07229fe1b5a0" name="Default" comment="6.详情页的静态页面生成&#10;  执行批量静态化详情页脚本文件">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/regenerate_detail_html.py" />
+    <list default="true" id="1b3b0539-63a3-4e20-aa27-07229fe1b5a0" name="Default" comment="6.商品详情页面静态化&#10;  执行批量静态化详情页脚本文件">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/sys" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/1.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/10.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/11.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/12.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/13.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/14.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/15.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/16.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/2.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/3.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/4.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/5.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/6.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/7.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/8.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/detail/9.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/user_center_site.html" afterPath="$PROJECT_DIR$/templates/user_center_site.html" />
     </list>
@@ -52,8 +68,8 @@
       <file leaf-file-name="regenerate_detail_html.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scripts/regenerate_detail_html.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="89" column="18" lean-forward="true" selection-start-line="89" selection-start-column="18" selection-end-line="89" selection-end-column="18" />
+            <state relative-caret-position="352">
+              <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
               <folding>
                 <element signature="e#498#2187#0" expanded="false" />
               </folding>
@@ -74,8 +90,8 @@
       <file leaf-file-name="crontab.log" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/logs/crontab.log">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1122">
-              <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+            <state relative-caret-position="1210">
+              <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -700,13 +716,6 @@
       <option name="presentableId" value="Default" />
       <updated>1565855446385</updated>
     </task>
-    <task id="LOCAL-00064" summary="6.地址模型类 导入复制粘贴&#10;  User 新增字段 default_address&#10;  数据迁移&#10;">
-      <created>1566554390022</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1566554390022</updated>
-    </task>
     <task id="LOCAL-00065" summary="7.新增收货地址">
       <created>1566556545615</created>
       <option name="number" value="00065" />
@@ -1043,7 +1052,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566998443638</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="6.商品详情页面静态化&#10;  执行批量静态化详情页脚本文件">
+      <created>1567001241024</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1567001241024</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1064,7 +1080,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42424244" sideWeight="0.50766087" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40902475" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32841328" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3323587" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3321033" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32656828" sideWeight="0.4963437" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3269962" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24954297" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1125,7 +1141,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="2.创建子应用 carts&#10;  post 接收参数 解析校验&#10;  判断是否登录 手动--user.anthenticated" />
     <MESSAGE value="3.增加购物车 --cookie增加&#10;  查询数据 --request.COOKIES.get('carts')&#10;  增加数据 --response.set_cookie(k,v,s)&#10;  加解密" />
     <MESSAGE value="4.增加购物车-- redis增加&#10;  &quot;user_id1&quot;:{&quot;sku_id&quot;:{&quot;count&quot;:&quot;1&quot;,&quot;selected&quot;:&quot;True&quot;},&#10;  1.redis_client = get_redis_connection('carts')&#10;  2.redis_client.hgetall(user.id)&#10;  3.如果该用户没有购物车数据 直接新增&#10;  4.判断 商品有没有记录&#10;    有--&gt;sku_dict[&quot;count&quot;]+=count&#10;    没有--&gt;新增sku_id数据 redis_client.hset(user.id, sku_id,string)" />
     <MESSAGE value="5.展示购物车&#10;  1.render 展示购物车页面&#10;  2.判断是否登录 user.is_authenticated&#10;  3.统一cookie redis 数据格式&#10;    通过 sku_ids 去SKU表查询商品数据&#10;    skus = SKU.objects.filter(id__in=sku_ids)&#10;    组合前端需要的数据格式" />
@@ -1150,7 +1165,8 @@
     <MESSAGE value="3.保存订单支付结果&#10;  1.定义支付结果模型类&#10;  2.pay_success.html&#10;  3.接收参数&#10;    取出签名值&#10;    认证alipay对象&#10;    通过校验--入库 (支付宝二次校验)&#10;" />
     <MESSAGE value="4.首页静态化&#10;  1 获取首页需要的 数据库数据&#10;  2 获取 index 模板文件--loder.get_template('index.html')&#10;  3 渲染数据到模板文件 ==&gt; html_text(渲染完毕的纯字符串)&#10;  4 将html_text 写入本地文件&#10;" />
     <MESSAGE value="5.定时任务crontab静态化首页&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="5.定时任务crontab静态化首页&#10;" />
+    <MESSAGE value="6.商品详情页面静态化&#10;  执行批量静态化详情页脚本文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="6.商品详情页面静态化&#10;  执行批量静态化详情页脚本文件" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1599,8 +1615,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/logs/crontab.log">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1122">
-          <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+        <state relative-caret-position="1210">
+          <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1661,8 +1677,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/regenerate_detail_html.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="89" column="18" lean-forward="true" selection-start-line="89" selection-start-column="18" selection-end-line="89" selection-end-column="18" />
+        <state relative-caret-position="352">
+          <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
           <folding>
             <element signature="e#498#2187#0" expanded="false" />
           </folding>
