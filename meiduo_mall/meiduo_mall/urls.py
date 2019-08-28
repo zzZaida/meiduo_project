@@ -46,4 +46,6 @@ urlpatterns = [
     # 9 订单
     url(r'^', include('apps.orders.urls', namespace='orders')),
 
+    # 10 支付宝
+    url(r'^', include('apps.payment.urls')),
 ]

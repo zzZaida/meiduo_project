@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'apps.goods',
     'apps.carts',
     'apps.orders',
+    'apps.payment',
 
 
     # 注册第三方子应用
@@ -283,6 +284,7 @@ QQ_REDIRECT_URI = 'http://www.meiduo.site:8000/oauth_callback'  # 回调地址
 # 指定自定义的Django文件存储类(告诉项目 替换了 存储类)
 DEFAULT_FILE_STORAGE = 'utils.fastdfs.fastdfs_storage.FastDFSStorage'
 
+
 # FastDFS相关参数
 # FDFS_BASE_URL = 'http://192.168.88.133:8888/'
 FDFS_BASE_URL = 'http://image.meiduo.site:8888/'
@@ -302,3 +304,10 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # 设置 搜索结果 每页显示的个数
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 5
+
+
+# 支付宝SDK配置参数
+ALIPAY_APPID = '2016101400682135'
+ALIPAY_DEBUG = True
+ALIPAY_URL = 'https://openapi.alipaydev.com/gateway.do'
+ALIPAY_RETURN_URL = 'http://www.meiduo.site:8000/payment/status/'
