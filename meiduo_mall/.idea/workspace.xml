@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1b3b0539-63a3-4e20-aa27-07229fe1b5a0" name="Default" comment="4.首页静态化&#10;  1 获取首页需要的 数据库数据&#10;  2 获取 index 模板文件--loder.get_template('index.html')&#10;  3 &#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/contents/crons.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/payment/migrations/0001_initial.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/index.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/order_success.html" afterPath="" />
+    <list default="true" id="1b3b0539-63a3-4e20-aa27-07229fe1b5a0" name="Default" comment="5.定时任务crontab静态化首页&#10;">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/contents/crons.py" afterPath="$PROJECT_DIR$/apps/contents/crons.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/meiduo_mall/settings/development.py" afterPath="$PROJECT_DIR$/meiduo_mall/settings/development.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/user_center_site.html" afterPath="$PROJECT_DIR$/templates/user_center_site.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -55,8 +53,8 @@
       <file leaf-file-name="crons.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/contents/crons.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="39" column="47" lean-forward="false" selection-start-line="39" selection-start-column="47" selection-end-line="39" selection-end-column="47" />
+            <state relative-caret-position="231">
+              <caret line="44" column="46" lean-forward="false" selection-start-line="44" selection-start-column="46" selection-end-line="44" selection-end-column="46" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -69,16 +67,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
               <caret line="76" column="33" lean-forward="false" selection-start-line="76" selection-start-column="31" selection-end-line="76" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="529">
-              <caret line="109" column="24" lean-forward="true" selection-start-line="109" selection-start-column="24" selection-end-line="109" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -98,7 +86,7 @@
         <entry file="file://$PROJECT_DIR$/apps/contents/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="154">
-              <caret line="11" column="8" lean-forward="true" selection-start-line="11" selection-start-column="8" selection-end-line="25" selection-end-column="17" />
+              <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="25" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -107,8 +95,18 @@
       <file leaf-file-name="development.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/meiduo_mall/settings/development.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-67">
-              <caret line="153" column="0" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+            <state relative-caret-position="531">
+              <caret line="324" column="6" lean-forward="true" selection-start-line="324" selection-start-column="4" selection-end-line="324" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="crontab.log" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/logs/crontab.log">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -164,7 +162,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/apps/oauth/urls.py" />
         <option value="$PROJECT_DIR$/apps/areas/urls.py" />
         <option value="$PROJECT_DIR$/scripts/run_py.py" />
         <option value="$PROJECT_DIR$/scripts/run.sh" />
@@ -203,7 +200,6 @@
         <option value="$PROJECT_DIR$/templates/cart.html" />
         <option value="$PROJECT_DIR$/templates/order_success.html" />
         <option value="$PROJECT_DIR$/apps/payment/keys/app_public_key.pem" />
-        <option value="$PROJECT_DIR$/meiduo_mall/settings/development.py" />
         <option value="$PROJECT_DIR$/apps/payment/models.py" />
         <option value="$PROJECT_DIR$/apps/payment/urls.py" />
         <option value="$PROJECT_DIR$/apps/payment/alipay-return" />
@@ -214,6 +210,8 @@
         <option value="$PROJECT_DIR$/templates/pay_success.html" />
         <option value="$PROJECT_DIR$/apps/payment/views.py" />
         <option value="$PROJECT_DIR$/static/index.html" />
+        <option value="$PROJECT_DIR$/meiduo_mall/settings/development.py" />
+        <option value="$PROJECT_DIR$/logs/crontab.log" />
         <option value="$PROJECT_DIR$/apps/contents/crons.py" />
       </list>
     </option>
@@ -276,7 +274,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
+              <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -290,7 +288,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
+              <option name="myItemId" value="logs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -733,13 +731,6 @@
       <option name="presentableId" value="Default" />
       <updated>1565855446385</updated>
     </task>
-    <task id="LOCAL-00062" summary="4.获取市县 的数据&#10;  1.parent_id = area_id&#10;  2.列表推导式--JSON&#10;  3.给前端返回父级信息&#10;">
-      <created>1566551020651</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1566551020651</updated>
-    </task>
     <task id="LOCAL-00063" summary="5.数据缓存&#10;  from django.core.cache import cache&#10;  cache.set(k,v,seconds)&#10;  cache.get(k)&#10;">
       <created>1566552991831</created>
       <option name="number" value="00063" />
@@ -1076,7 +1067,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566991648740</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="4.首页静态化&#10;  1 获取首页需要的 数据库数据&#10;  2 获取 index 模板文件--loder.get_template('index.html')&#10;  3 渲染数据到模板文件 ==&gt; html_text(渲染完毕的纯字符串)&#10;  4 将html_text 写入本地文件&#10;">
+      <created>1566997176963</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1566997176963</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1092,16 +1090,16 @@
     <frame x="53" y="24" width="1175" height="1121" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24360105" sideWeight="0.49253732" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24360105" sideWeight="0.49253732" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32747456" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42424244" sideWeight="0.50766087" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40902475" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32841328" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3323587" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3323587" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32656828" sideWeight="0.4963437" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3269962" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24954297" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41130605" sideWeight="0.49233913" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41130605" sideWeight="0.49233913" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2285192" sideWeight="0.5074627" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34870848" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1158,7 +1156,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="修改 BUG 将所有数据库和迁移文件删除,重新迁移文件  再导入访问量的模型类" />
     <MESSAGE value="&lt;第8天&gt;  1.封装 base64 加密类" />
     <MESSAGE value="2.创建子应用 carts&#10;  post 接收参数 解析校验&#10;  判断是否登录 手动--user.anthenticated" />
     <MESSAGE value="3.增加购物车 --cookie增加&#10;  查询数据 --request.COOKIES.get('carts')&#10;  增加数据 --response.set_cookie(k,v,s)&#10;  加解密" />
@@ -1183,7 +1180,8 @@
     <MESSAGE value="&lt;第10天&gt;&#10;1.创建子应用 payment&#10;2.生成美多商城 秘钥 keys&#10;3.将 美多 公钥 剪切到 支付宝配置&#10;4.将支付宝的公钥 复制到 keys 公钥文件里" />
     <MESSAGE value="2.订单支付功能完善&#10;  1 接收 路径传参 order_id&#10;  2 校验 order 是不是当前的user 订单状态--未支付&#10;  3 和支付宝 建立链接认证  alipay=AliPay()&#10;  4 加密给支付宝传递的参数 order_id total_amount&#10;  5 返回支付宝链接给前端" />
     <MESSAGE value="3.保存订单支付结果&#10;  1.定义支付结果模型类&#10;  2.pay_success.html&#10;  3.接收参数&#10;    取出签名值&#10;    认证alipay对象&#10;    通过校验--入库 (支付宝二次校验)&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="3.保存订单支付结果&#10;  1.定义支付结果模型类&#10;  2.pay_success.html&#10;  3.接收参数&#10;    取出签名值&#10;    认证alipay对象&#10;    通过校验--入库 (支付宝二次校验)&#10;" />
+    <MESSAGE value="4.首页静态化&#10;  1 获取首页需要的 数据库数据&#10;  2 获取 index 模板文件--loder.get_template('index.html')&#10;  3 渲染数据到模板文件 ==&gt; html_text(渲染完毕的纯字符串)&#10;  4 将html_text 写入本地文件&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="4.首页静态化&#10;  1 获取首页需要的 数据库数据&#10;  2 获取 index 模板文件--loder.get_template('index.html')&#10;  3 渲染数据到模板文件 ==&gt; html_text(渲染完毕的纯字符串)&#10;  4 将html_text 写入本地文件&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1195,14 +1193,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/apps/goods/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="23" column="5" lean-forward="false" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/goods/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="440">
@@ -1637,7 +1627,7 @@
     <entry file="file://$PROJECT_DIR$/apps/contents/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
-          <caret line="11" column="8" lean-forward="true" selection-start-line="11" selection-start-column="8" selection-end-line="25" selection-end-column="17" />
+          <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="25" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -1668,18 +1658,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/meiduo_mall/settings/development.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-67">
-          <caret line="153" column="0" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="529">
-          <caret line="109" column="24" lean-forward="true" selection-start-line="109" selection-start-column="24" selection-end-line="109" selection-end-column="24" />
+          <caret line="109" column="24" lean-forward="false" selection-start-line="109" selection-start-column="24" selection-end-line="109" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -1692,10 +1674,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/meiduo_mall/settings/development.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="531">
+          <caret line="324" column="6" lean-forward="true" selection-start-line="324" selection-start-column="4" selection-end-line="324" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/crontab.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/apps/contents/crons.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="39" column="47" lean-forward="false" selection-start-line="39" selection-start-column="47" selection-end-line="39" selection-end-column="47" />
+        <state relative-caret-position="231">
+          <caret line="44" column="46" lean-forward="false" selection-start-line="44" selection-start-column="46" selection-end-line="44" selection-end-column="46" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 
     # 注册第三方子应用
     'haystack',
+    'django_crontab',  # 定时任务
 
 ]
 
@@ -311,3 +312,14 @@ ALIPAY_APPID = '2016101400682135'
 ALIPAY_DEBUG = True
 ALIPAY_URL = 'https://openapi.alipaydev.com/gateway.do'
 ALIPAY_RETURN_URL = 'http://www.meiduo.site:8000/payment/status/'
+
+
+# 设置定时任务
+CRONJOBS = [
+    # 每1分钟生成一次首页静态文件
+    ('*/1 * * * *', 'apps.contents.crons.generate_static_index_html', '>> ' + os.path.join(BASE_DIR, 'logs/crontab.log'))
+]
+# 解决 crontab 中文问题
+CRONTAB_COMMAND_PREFIX = 'LANG_ALL=zh_cn.UTF-8'
+# 添加定时任务到系统中
+# $ python manage.py crontab add

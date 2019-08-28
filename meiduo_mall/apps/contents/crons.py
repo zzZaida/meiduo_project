@@ -42,6 +42,8 @@ def generate_static_index_html():
     with open(file_path, 'w')as f:
         f.write(html_text)
 
+# 广告商没钱了  过节--重新生成首页--定时任务crontab静态化首页--dev.py
+
 # 验证
 # python manage.py shell
 # >>> from apps.contents.crons import generate_static_index_html
