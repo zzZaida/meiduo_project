@@ -1,14 +1,13 @@
 import os
-
 from django import http
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views import View
-
 from apps.orders.models import OrderInfo
 from alipay import AliPay
 
+from apps.payment.models import Payment
 from utils.response_code import RETCODE
 
 
@@ -53,3 +52,43 @@ class PaymentView(LoginRequiredMixin, View):
 
         # 5.返回支付宝的链接 给前端
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'alipay_url': alipay_url})
+
+
+class PaymentStatusView(View):
+    """保存订单支付结果"""
+    def get(self, request):
+        # 接收参数
+        query_params = request.GET.dict()
+        # 1.取出签名值
+        sign = query_params.pop('sign')
+
+        # 2.认证对象alipay
+        alipay = AliPay(
+            appid=settings.ALIPAY_APPID,
+            app_notify_url=None,
+            app_private_key_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'keys/app_private_key.pem'),
+            alipay_public_key_path=os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                'keys/alipay_public_key.pem'),
+            sign_type="RSA2",
+            debug=settings.ALIPAY_DEBUG
+        )
+
+        # 3.通过校验 入库--支付宝二次校验
+        success = alipay.verify(query_params, sign)
+
+        if success:
+            Payment.objects.create(
+                # 订单id
+                order_id=query_params['out_trade_no'],
+                # 支付宝交易id
+                trade_id=query_params['trade_no']
+            )
+
+            context = {
+                'trade_id': query_params['trade_no']
+            }
+
+            return render(request, 'pay_success.html', context)
+        else:
+            # 订单支付失败，重定向到我的订单
+            return http.HttpResponseForbidden('非法请求')

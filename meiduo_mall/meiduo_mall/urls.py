@@ -41,7 +41,7 @@ urlpatterns = [
     url(r'^search/', include('haystack.urls')),
 
     # 8 购物车
-    url(r'^', include('apps.carts.urls')),
+    url(r'^', include('apps.carts.urls', namespace='carts')),
 
     # 9 订单
     url(r'^', include('apps.orders.urls', namespace='orders')),

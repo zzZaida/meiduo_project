@@ -169,7 +169,7 @@ class OrderCommitView(LoginRequiredMixin, View):
                         # 延时--演示资源竞争
                         # (7号库存只有5个,但是显示两个人(3台 共6台)都成功了--赔钱)
                         # 但tb_sku中显示 5  0 -->2  3
-                        time.sleep(10)
+                        # time.sleep(10)
 
                         # 4.SKU 销量增加 库存减少
                         # sku.stock -= cart_count
