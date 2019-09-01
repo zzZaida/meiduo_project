@@ -1,9 +1,16 @@
+import random
+
 from django import http
 from django.shortcuts import render
 from django.views import View
+from django_redis import get_redis_connection
+
+from apps.users.models import User
 from apps.verifications import contants
+from celery_tasks.sms.tasks import ccp_send_sms_code
 from meiduo_mall.settings.development import logger
 from utils.response_code import RETCODE
+from utils.secret import SecretOauth
 
 
 # <4> 图片验证码 image_codes/(?P<uuid>[\w-]+)/
@@ -26,7 +33,7 @@ class ImageCodeView(View):
         # 4.3 存储  setex设置过期时间  5min--300s
         img_client.setex('img_%s' % uuid, contants.IMAGE_CODE_REDIS_EXPIRE, text)
 
-       # 5 给前端返回 图片验证码 bytes
+        # 5 给前端返回 图片验证码 bytes
         return http.HttpResponse(image, content_type='image/jpeg')
 
 
@@ -96,3 +103,94 @@ class SMSCodeView(View):
         # 6.返回响应对象
         return http.JsonResponse({'code': '0', 'errmsg': '发送短信成功'})
 
+
+# 忘记密码--1--验证用户名和图形验证码
+class PwdCodeView(View):
+    def get(self, request, username):
+        # 1.接收参数
+        uuid = request.GET.get('image_code_id')
+        image_code = request.GET.get('text')
+
+        # 2.图形验证码是否正确
+        # 2.1从redis中读取之前保存的图形验证码文本
+        redis_cli_image = get_redis_connection('verify_image_code')
+        image_code_redis = redis_cli_image.get('img_%s' % uuid)
+        # 2.2如果redis中的数据过期则提示
+        if image_code_redis is None:
+            return http.JsonResponse({'status': 400, 'errmsg': '图形验证码已过期，点击图片换一个'})
+        # 2.3立即删除redis中图形验证码，表示这个值不能使用第二次
+        redis_cli_image.delete(uuid)
+        # 2.4对比图形验证码：不区分大小写
+        if image_code_redis.decode().lower() != image_code.lower():
+            return http.JsonResponse({'status': 400, 'errmsg': '图形验证码错误'})
+        try:
+            user = User.objects.get(username=username)
+        except Exception as e:
+            return http.JsonResponse({'status': 404, 'errmsg': '用户名错误'})
+
+        # 处理
+        json_str = SecretOauth().dumps({"user_id": user.id, 'mobile': user.mobile})
+        return http.JsonResponse({'mobile': user.mobile, 'access_token': json_str})
+
+
+# 忘记密码--2--验证手机号
+class PwdSMSCodeView(View):
+    def get(self, request):
+        access_token = request.GET.get('access_token')
+        user_dict = SecretOauth().loads(access_token)
+
+        if user_dict is None:
+            return http.JsonResponse({'status': 400, 'errmsg': '参数不全'})
+        mobile = user_dict['mobile']
+        try:
+            User.objects.get(mobile=mobile)
+        except:
+            return http.JsonResponse({'status': 400, 'errmsg': '手机号不存在'})
+
+        # 验证
+        redis_cli_sms = get_redis_connection('sms_code')
+        # 是否60秒内
+        if redis_cli_sms.get(mobile + '_flag')is not None:
+            return http.JsonResponse({'status': 400, 'errmsg': '发送短信太频繁，请稍候再发'})
+
+        # 处理
+        # 1.生成随机6位数
+        sms_code = '%06d' % random.randint(0, 999999)
+        print(sms_code)
+        # 2.优化：使用管道
+        redis_pl = redis_cli_sms.pipeline()
+        redis_pl.setex(mobile, contants.SMS_CODE_REDIS_EXPIRE, sms_code)
+        redis_pl.setex(mobile + '_flag', contants.SEND_SMS_CODE_INTERVAL, 1)
+        redis_pl.execute()
+        # 3.发短信
+        # 通过delay调用，可以将任务加到队列中，交给celery去执行
+        ccp_send_sms_code.delay(mobile, sms_code)
+
+        return http.JsonResponse({'status': RETCODE.OK, 'errmsg': 'OK'})
+
+
+# 忘记密码--2--短信验证码
+class PwdCheckCodeView(View):
+    def get(self, request, username):
+        sms_code = request.GET.get('sms_code')
+        try:
+            user = User.objects.get(username=username)
+        except:
+            return http.JsonResponse({'status': 400, 'errmsg': '用户名错误'})
+
+        # 短信验证码
+        # 1.读取redis中的短信验证码
+        redis_cli = get_redis_connection('sms_code')
+        sms_code_redis = redis_cli.get(user.mobile)
+        # 2.判断是否过期
+        if sms_code_redis is None:
+            return http.HttpResponseForbidden('短信验证码已经过期')
+        # 3.删除短信验证码，不可以使用第二次
+        redis_cli.delete(user.mobile)
+        redis_cli.delete(user.mobile + '_flag')
+        # 4.判断是否正确
+        if sms_code_redis.decode() != sms_code:
+            return http.HttpResponseForbidden('短信验证码错误')
+
+        json_str = SecretOauth().dumps({"user_id": user.id, 'mobile': user.mobile})
+        return http.JsonResponse({'user_id': user.id, 'access_token': json_str})

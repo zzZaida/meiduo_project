@@ -69,7 +69,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -317,7 +317,7 @@ ALIPAY_RETURN_URL = 'http://www.meiduo.site:8000/payment/status/'
 # 设置定时任务
 CRONJOBS = [
     # 每1分钟生成一次首页静态文件
-    ('*/1 * * * *', 'apps.contents.crons.generate_static_index_html', '>> ' + os.path.join(BASE_DIR, 'logs/crontab.log'))
+    # ('*/1 * * * *', 'apps.contents.crons.generate_static_index_html', '>> ' + os.path.join(BASE_DIR, 'logs/crontab.log'))
 ]
 # 解决 crontab 中文问题
 CRONTAB_COMMAND_PREFIX = 'LANG_ALL=zh_cn.UTF-8'

@@ -34,6 +34,7 @@
 							<div class="more_input clearfix">
 								<input v-model="remembered" type="checkbox" name="remembered">
 								<label>记住登录</label>
+                                <a href="/find_password">忘记密码</a>
 							</div>
                             {% if account_errmsg %}
                                 <div class="pwd_error">{{ account_errmsg }}</div>
@@ -46,7 +47,7 @@
 				<div class="third_party">
 					<a href="javascript:;" class="qq_login" v-on:click="qq_login">QQ</a>
 					<a href="#" class="weixin_login">微信</a>
-					<a href="register.html" class="register_btn">立即注册</a>
+					<a href="/register" class="register_btn">立即注册</a>
 				</div>
 
 			</div>

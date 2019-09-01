@@ -7,6 +7,7 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
+from utils.secret import SecretOauth
 
 
 # 点完注册  DeBUG 有反应 到后台页面 ---> 前端问题
@@ -576,3 +577,39 @@ class ChangePasswordView(LoginRequiredMixin, View):
 
         # # 响应密码修改结果：重定向到登录界面
         return response
+
+
+# 15 忘记密码页面显示
+class FindPwdView(View):
+    def get(self, request):
+        return render(request, 'find_password.html')
+
+
+# 16 忘记密码--3--修改密码
+class ChangePwdView(View):
+    def post(self, request, user_id):
+        data = request.body.decode()
+        data_dict = json.loads(data)
+        password = data_dict.get('password')
+        password2 = data_dict.get('password2')
+        access_token = data_dict.get('access_token')
+
+        if not all([access_token, password, password2]):
+            return http.HttpResponseForbidden('填写数据不完整')
+        if password != password2:
+            return http.HttpResponseForbidden('两个密码不一致')
+
+        user_dict = SecretOauth().loads(access_token)
+        if user_dict is None:
+            return http.JsonResponse({{'status': 400, 'errmsg': '参数错误'}})
+
+        if int(user_id) != user_dict['user_id']:
+            return http.JsonResponse({{'status': 400, 'errmsg': '用户不存在'}})
+
+        try:
+            user = User.objects.get(id=user_id)
+        except:
+            return http.JsonResponse({'status': 400, 'errmsg': '用户不匹配'})
+        user.set_password(password)
+        user.save()
+        return http.JsonResponse({'status': RETCODE.OK, 'errmsg': '修改密码成功'})
